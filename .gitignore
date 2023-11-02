@@ -8,8 +8,6 @@
 # testing
 /coverage
 
-/sanity-demo
-
 # next.js
 /.next/
 /out/
