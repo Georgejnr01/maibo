@@ -43,7 +43,7 @@ function Checkout() {
     },
     customizations: {
       title: "Payment",
-      logo: "https://demo-e-commerce-store.vercel.app/assets/logo.png",
+      logo: "https://proclassics.co/assets/logo.png",
     },
   };
 
