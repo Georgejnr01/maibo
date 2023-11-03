@@ -54,7 +54,12 @@ function CartItem({ product }) {
         </button>
       </span>
       <span className="relative block h-32 md:h-36 w-28 md:w-32">
-        <Image src={product?.productImage} alt="item" fill />
+        <Image
+          src={product?.productImage}
+          alt="item"
+          fill
+          className="object-cover object-center"
+        />
       </span>
     </div>
   );

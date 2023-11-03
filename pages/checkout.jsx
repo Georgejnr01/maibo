@@ -102,7 +102,7 @@ function Checkout() {
 
   const handlePaymentByCrypto = () => {
     let messageForEmail = `I would like to make payment for my order - #${order_id} with crypto`;
-    let link = `mailto:proclassicsstore@gmail.com?subject=Payment with Crypto&body=${messageForEmail}`;
+    let link = `mailto:demo@gmail.com?subject=Payment with Crypto&body=${messageForEmail}`;
     updatePaymentStatusHandler(data, "Pending")
       .then(() => {
         toast.success("Opening Email App", {
