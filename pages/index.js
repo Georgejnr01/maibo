@@ -31,7 +31,7 @@ export default function Home({ products, testimonials }) {
           <div className="relative mx-auto text-center text-white w-fit bottom-24 h-fit">
             <p className="mb-2 text-sm italic opacity-90">Making You New...</p>
             <h1 className="max-w-4xl text-4xl font-['Playfair_Display','sans-serif'] font-semibold md:text-7xl md:font-bold">
-              Welcome To ProClassics
+              Welcome To Relaced
             </h1>
             <Link
               href="/shop"
@@ -49,7 +49,7 @@ export default function Home({ products, testimonials }) {
             Obsessive Attention. Intelligent Effort.
           </h2>
           {/*   <p className="text-sm md:text-base">
-            Functional handbags made of luxurious materials to improve
+            Functional products made of luxurious materials to improve
             people&apos;s lives in small but mighty ways.
           </p>--> */}
         </span>
