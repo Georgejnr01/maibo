@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { db } from "../../firebase";
 import useSearch from "../../hooks/useSearch";
-import Logo from "../../public/assets/logo.png";
+import Logo from "../../public/assets/logo2.png";
 import {
   addFromLocalStorage,
   addTotalPrice,
