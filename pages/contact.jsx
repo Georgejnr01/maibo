@@ -13,7 +13,7 @@ function Contact() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [number, setNumber] = useState("");
-  const [alert, setAlert] = useState(true);
+  const [alert, setAlert] = useState(false);
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -27,8 +27,8 @@ function Contact() {
         <h1 className="text-4xl md:text-5xl opacity-95">Contact Us</h1>
         <div className="flex flex-col gap-y-4 md:gap-y-6 my-10 md:my-14 opacity-80 font-medium">
           <span>Call: +971 52 465 0058 | +234 909 8149447</span>
-          <span>Email: support@demo.co | pproclassics@gmail.com</span>
-          <span>Address: The good beach</span>
+          <span>Email: support@demo.co | relaced@gmail.com</span>
+          <span>Address: CA, Johnson avenue</span>
         </div>
         {alert && (
           <div className="text-3xl bg-gray text-[#000] p-5">
