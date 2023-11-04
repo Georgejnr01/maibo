@@ -23,7 +23,7 @@ export default function Home({ products, testimonials }) {
       <div className="relative h-96 md:h-[35rem] w-full mb-12">
         <Image
           fill
-          src="/assets/ezgif.gif"
+          src="/assets/newbg.gif"
           alt="demo"
           className="object-cover object-top"
         />
