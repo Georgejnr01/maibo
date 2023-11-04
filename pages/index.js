@@ -88,7 +88,7 @@ export default function Home({ products, testimonials }) {
               <Link href="/collections/wrist-watch" className="block group">
                 <span className="relative block w-full h-64 overflow-hidden md:h-80">
                   <Image
-                    src="/assets/100000585.jpg"
+                    src="/assets/nike4.png"
                     alt="image"
                     sizes="(max-width: 768px) 100vw,
                     (max-width: 1200px) 50vw,
@@ -131,7 +131,7 @@ export default function Home({ products, testimonials }) {
               width="560"
               height="315"
               className="max-w-full"
-              src="https://www.youtube.com/embed/XiMk88yhLBI"
+              src="https://www.youtube.com/embed/QqtYlY6k53I?si=SRxYa6_oaTNKhhsd"
               title="YouTube video player"
               frameborder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
