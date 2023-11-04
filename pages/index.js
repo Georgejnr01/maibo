@@ -88,7 +88,7 @@ export default function Home({ products, testimonials }) {
               <Link href="/collections/wrist-watch" className="block group">
                 <span className="relative block w-full h-64 overflow-hidden md:h-80">
                   <Image
-                    src="/assets/nike4.png"
+                    src="/assets/wristwatch.jpg"
                     alt="image"
                     sizes="(max-width: 768px) 100vw,
                     (max-width: 1200px) 50vw,
