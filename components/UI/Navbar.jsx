@@ -101,7 +101,7 @@ function Navbar() {
           className="w-5 h-5 cursor-pointer md:hidden"
           onClick={handleToggle}
         />
-        <Link href="/" className="relative w-[9.45rem] h-[3.95rem]">
+        <Link href="/" className="relative w-[6.75rem] h-[2.85rem]">
           
           <Image
             src={Logo}
