@@ -11,7 +11,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { db } from "../../firebase";
 import useSearch from "../../hooks/useSearch";
-import Logo from "../../public/assets/logo2.png";
+import Logo from "../../public/assets/maibo.png";
+import LogoIcon from "../../public/assets/maiboIcon.png";
 import {
   addFromLocalStorage,
   addTotalPrice,
@@ -75,7 +76,7 @@ function Navbar() {
         ].map((d) => (
           <li
             key={d.link}
-            className="block text-xs transition-all duration-300 md:inline-block md:mr-5 md:last-of-type:mr-0 group hover:bg-black/90 md:hover:bg-transparent"
+            className="block text-xs transition-all duration-300 md:inline-block md:mr-5 md:last-of-type:mr-0 group hover:bg-[#ff2a00] md:hover:bg-transparent"
           >
             <Link
               title={d.title}
@@ -100,13 +101,21 @@ function Navbar() {
           className="w-5 h-5 cursor-pointer md:hidden"
           onClick={handleToggle}
         />
-        <Link href="/" className="relative w-24 h-8 md:w-28 md:h-10">
+        <Link href="/" className="relative w-[9.45rem] h-[3.95rem]">
+          
           <Image
             src={Logo}
-            alt="ProClassics"
+            alt="Maibo"
             fill
-            className="object-cover object-center"
+            className=" object-cover object-center"
           />
+{/* 
+          <Image
+            src={LogoIcon}
+            alt="Maibo"
+            fill
+            className="object-cover object-center sm:hidden"
+          /> */}
         </Link>
       </span>
 
@@ -132,7 +141,7 @@ function Navbar() {
             title="Bag"
             onClick={handleCartToggle}
           />
-          <span className="absolute grid px-1 text-xs font-medium text-white bg-black rounded-full place-items-center -top-1 -right-1">
+          <span className="absolute grid px-1 text-xs font-medium text-white bg-[#ff2a00] rounded-full place-items-center -top-1 -right-1">
             {products.length}
           </span>
         </li>

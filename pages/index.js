@@ -23,21 +23,21 @@ export default function Home({ products, testimonials }) {
       <div className="relative h-96 md:h-[35rem] w-full mb-12">
         <Image
           fill
-          src="/assets/newbg.gif"
+          src="/assets/banner.jpg"
           alt="demo"
-          className="object-cover object-top"
+          className="object-cover object-center"
         />
-        <div className="absolute top-0 left-0 grid w-full h-full place-items-end bg-black/30">
+        <div className="absolute top-0 left-0 grid w-full h-full place-items-end bg-black/40">
           <div className="relative mx-auto text-center text-white w-fit bottom-24 h-fit">
-            <p className="mb-2 text-sm italic opacity-90">Making You New...</p>
-            <h1 className="max-w-4xl text-4xl font-['Playfair_Display','sans-serif'] font-semibold md:text-7xl md:font-bold">
-              Welcome To Relaced
+            {/* <p className="mb-2 text-sm italic opacity-90">Making You New...</p> */}
+            <h1 className="max-w-sm md:max-w-3xl text-4xl md:leading-[1.35] font-['Playfair_Display','sans-serif'] font-semibold md:text-7xl md:font-bold">
+              Shop Black Friday deals now
             </h1>
             <Link
               href="/shop"
               className="relative block px-5 py-3 mx-auto mt-5 overflow-hidden font-medium transition-all duration-200 border-2 group hover:text-black w-fit"
             >
-              <span className="absolute left-0 block w-full h-full transition-all duration-200 bg-white -bottom-12 group-hover:bottom-0 -z-0"></span>
+              <span className="absolute left-0 block w-full h-full transition-all duration-200 bg-[#ff2a00] -bottom-12 group-hover:bottom-0 -z-0"></span>
               <span className="relative z-10">Shop Now</span>
             </Link>
           </div>
@@ -46,7 +46,7 @@ export default function Home({ products, testimonials }) {
       <div className="mb-16">
         <span className="block text-center">
           <h2 className="mb-6 text-2xl font-medium md:text-4xl">
-            Obsessive Attention. Intelligent Effort.
+            Top Selling Items
           </h2>
           {/*   <p className="text-sm md:text-base">
             Functional products made of luxurious materials to improve
@@ -106,7 +106,7 @@ export default function Home({ products, testimonials }) {
           </div>
         </div>
       </div>
-      <div className="relative px-5 group md:px-16">
+      {/* <div className="relative px-5 group md:px-16">
         <span
           className="relative block h-72 md:h-96 lg:h-[30rem]"
           onClick={handlePause}
@@ -139,6 +139,47 @@ export default function Home({ products, testimonials }) {
             ></iframe>
           </div>
         )}
+      </div> */}
+      <div className="relative px-5 group md:px-16">
+        <div className="">Hot Deals</div>
+        <div className="gridImages w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 mt-4">
+          <div className="prodct bg-gray ">
+            <Image
+              src="/assets/black1.png"
+              alt="image"
+              width='300'
+              height='150'
+              className="w-full h-full object-center"
+            />
+          </div>
+          <div className="prodct  bg-gray">
+            <Image
+              src="/assets/black1.png"
+              alt="image"
+              width='300'
+              height='150'
+              className="object-cover "
+            />
+          </div>
+          <div className="prodct bg-gray">
+            <Image
+              src="/assets/black1.png"
+              alt="image"
+              width='300'
+              height='150'
+              className="object-cover "
+            />
+          </div>
+          <div className="prodct bg-gray">
+            <Image
+              src="/assets/black1.png"
+              alt="image"
+              width='300'
+              height='150'
+              className="object-cover "
+            />
+          </div>
+        </div>
       </div>
       {/* {testimonials && (
         <div className="grid grid-cols-2 gap-6 px-5 mb-16 md:px-16 md:gap-12 md:grid-cols-3">

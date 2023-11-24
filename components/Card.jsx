@@ -18,7 +18,7 @@ function Card({ data }) {
       <div className="w-full text-center relative">
         <span className="absolute top-3 left-3 z-10 flex items-center space-x-2">
           {checkIfAlreadyAdded() && (
-            <span className="bg-black rounded-lg text-xs opacity-70 px-3 py-1 block text-white ">
+            <span className="bg-[#ff2a00] rounded-lg text-xs opacity-70 px-3 py-1 block text-white ">
               In Bag
             </span>
           )}

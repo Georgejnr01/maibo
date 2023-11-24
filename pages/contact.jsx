@@ -27,7 +27,7 @@ function Contact() {
         <h1 className="text-4xl md:text-5xl opacity-95">Contact Us</h1>
         <div className="flex flex-col gap-y-4 md:gap-y-6 my-10 md:my-14 opacity-80 font-medium">
           <span>Call: +971 52 465 0058 | +234 909 8149447</span>
-          <span>Email: support@demo.co | relaced@gmail.com</span>
+          <span>Email: support@demo.co | support@maibo.com</span>
           <span>Address: CA, Johnson avenue</span>
         </div>
         {alert && (
