@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import { NextStudio } from 'next-sanity/studio'
 import { metadata } from 'next-sanity/studio/metadata'
-import config from '../../sanity.config.js'
+import config from '../../sanity/sanity.config.js'
 
 export default function StudioPage() {
   return (
