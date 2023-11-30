@@ -24,6 +24,7 @@
     "react-icons": "^4.7.1",
     "react-redux": "^8.0.5",
     "react-select": "^5.7.0",
+    "react-timer-hook": "^3.0.7",
     "react-toastify": "^9.1.1",
     "redux": "^4.2.0",
     "sanity": "^3.20.0",

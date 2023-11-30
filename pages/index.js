@@ -7,8 +7,10 @@ import { BsArrowRight, BsFillPlayCircleFill } from "react-icons/bs";
 import { toast } from "react-toastify";
 import Card from "../components/Card";
 import { sanityClient } from "../sanity";
+import MyTimer from "../components/Timer";
+import LiveTimer from "../components/LiveTimer";
 
-export default function Home({ products, testimonials }) {
+export default function Home({ products, testimonials, categories }) {
   const [isPlayed, setPlayState] = useState(false);
   const handlePlay = () => {
     setPlayState(true);
@@ -16,6 +18,9 @@ export default function Home({ products, testimonials }) {
   const handlePause = () => {
     setPlayState(false);
   };
+
+  const seconds = 600;
+  const timeStamp = new Date(Date.now() + seconds * 10000);
 
   return (
     <div>
@@ -44,9 +49,12 @@ export default function Home({ products, testimonials }) {
         </div>
       </div>
       <div className="mb-16">
-        <span className="block text-center">
-          <h2 className="mb-6 text-2xl font-medium md:text-4xl">
-            Top Selling Items
+        <span className="block text-center mx-auto">
+          <h2 className=" mb-2 text-2xl font-medium md:text-4xl">
+            Christmas up to 70% off{" "}
+            <div className=" text-red-500 ">
+              <LiveTimer />{" "}
+            </div>
           </h2>
           {/*   <p className="text-sm md:text-base">
             Functional products made of luxurious materials to improve
@@ -140,45 +148,27 @@ export default function Home({ products, testimonials }) {
           </div>
         )}
       </div> */}
-      <div className="relative px-5 group md:px-16">
-        <div className="">Hot Deals</div>
-        <div className="gridImages w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 mt-4">
-          <div className="prodct bg-gray ">
-            <Image
-              src="/assets/black1.png"
-              alt="image"
-              width='300'
-              height='150'
-              className="w-full h-full object-center"
-            />
-          </div>
-          <div className="prodct  bg-gray">
-            <Image
-              src="/assets/black1.png"
-              alt="image"
-              width='300'
-              height='150'
-              className="object-cover "
-            />
-          </div>
-          <div className="prodct bg-gray">
-            <Image
-              src="/assets/black1.png"
-              alt="image"
-              width='300'
-              height='150'
-              className="object-cover "
-            />
-          </div>
-          <div className="prodct bg-gray">
-            <Image
-              src="/assets/black1.png"
-              alt="image"
-              width='300'
-              height='150'
-              className="object-cover "
-            />
-          </div>
+      <div className="relative w-full min-h-[30vh] px-5 group md:px-16">
+        <div className="">Categories</div>
+        <div className="gridImages w-full h-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 mt-4">
+          {categories.map((cat) => (
+            <Link
+              href={`/collections/${cat.slug}`}
+              key={cat._id}
+              className="prodct relative flex items-center justify-center w-full h-[200px]"
+            >
+              <div className="bg-black/60 w-full h-full absolute top-0 -z-20"></div>
+              <Image
+                src="/assets/bag.png"
+                alt="image"
+                width="300"
+                height="150"
+                className="object-cover absolute -z-50"
+              />
+
+              <div className="text-center text-white z-10">{cat.name}</div>
+            </Link>
+          ))}
         </div>
       </div>
       {/* {testimonials && (
@@ -234,10 +224,19 @@ export async function getServerSideProps() {
 
   const testimonials = await sanityClient.fetch(testimonialQuery);
 
+  const categoryQuery = `*[_type == 'category']{
+    _id,
+    name,
+   "slug": slug.current,
+  }`;
+
+  const categories = await sanityClient.fetch(categoryQuery);
+
   return {
     props: {
       products,
       testimonials,
+      categories,
     },
   };
 }
