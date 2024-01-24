@@ -229,6 +229,13 @@ function Shop({ products, categories }) {
         </button>
       </div>
       <div className="grid grid-cols-2 gap-6 mt-16 md:gap-12 md:grid-cols-3 lg:grid-cols-4">
+        {products?.length === 0 && data?.length === 0 ? (
+          <p className="max-w-sm text-xs text-center sm:block">
+            No product available
+          </p>
+        ) : (
+          <></>
+        )}
         {!apply ? (
           <>
             {products.length > 0 &&

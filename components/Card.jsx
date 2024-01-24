@@ -6,6 +6,8 @@ import { formatter } from "../utils/Formatter";
 
 function Card({ data }) {
   const { products } = useSelector((state) => state.cart);
+  const { rate } = useSelector((state) => state.exchangeRate);
+
   const checkIfAlreadyAdded = () => {
     let item = products.find((d) => d._id === data._id);
     if (item) {
@@ -37,10 +39,12 @@ function Card({ data }) {
               (max-width: 1200px) 50vw,
               33vw"
               alt="image"
-              className="object-contain object-center transition-all duration-500 group-hover:opacity-0"
+              className={`object-contain object-center transition-all duration-500 ${
+                data?.productImage2 !== null ? "group-hover:opacity-0" : ""
+              }`}
             />
           )}
-          {data?.productImage2 && (
+          {data?.productImage2 !== null && (
             <Image
               fill
               sizes="(max-width: 768px) 100vw,
@@ -58,7 +62,7 @@ function Card({ data }) {
           </h3>
           <p className="mt-3 text-xs md:text-sm">
             {data?.discountedPrice !== data?.originalPrice &&
-              `${formatter.format(data?.discountedPrice)} from `}{" "}
+              `${formatter.format(data?.discountedPrice * rate)} from `}{" "}
             <span
               className={`${
                 data?.discountedPrice !== data?.originalPrice
@@ -66,7 +70,7 @@ function Card({ data }) {
                   : ""
               }`}
             >
-              {formatter.format(data?.originalPrice)}
+              {formatter.format(data?.originalPrice * rate)}
             </span>
           </p>
         </span>
