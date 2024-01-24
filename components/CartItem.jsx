@@ -1,12 +1,13 @@
 import Image from "next/image";
 import React from "react";
 import { AiOutlineMinusSquare, AiOutlinePlusSquare } from "react-icons/ai";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { decrement, increment, remove } from "../redux/slices/cart";
 import { formatter } from "../utils/Formatter";
 
 function CartItem({ product }) {
   const dispatch = useDispatch();
+  const { rate } = useSelector((state) => state.exchangeRate);
   return (
     <div className="flex justify-between items-start transition-all duration-200">
       <span className="flex h-32 md:h-36 items-start justify-between flex-col">
@@ -17,7 +18,7 @@ function CartItem({ product }) {
           <h4 className="mb-1">{product?.name}</h4>
           <p className="mt-3 text-xs md:text-sm">
             {product?.discountedPrice !== product?.originalPrice &&
-              `${formatter.format(product?.discountedPrice)} from `}{" "}
+              `${formatter.format(product?.discountedPrice * rate)} from `}{" "}
             <span
               className={`${
                 product?.discountedPrice !== product?.originalPrice
@@ -25,7 +26,7 @@ function CartItem({ product }) {
                   : ""
               }`}
             >
-              {formatter.format(product?.originalPrice)}
+              {formatter.format(product?.originalPrice * rate)}
             </span>
           </p>
           <span className="flex mt-3 justify-between items-center w-28">

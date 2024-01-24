@@ -41,7 +41,7 @@ function Navbar() {
   };
 
   return (
-    <nav className="sticky top-0 z-20 flex items-center justify-between px-5 py-4 bg-white md:px-16">
+    <nav className="sticky top-0 z-50 flex items-center justify-between px-5 py-4 bg-white md:px-16">
       <span
         className={`fixed bg-white/80 z-40 transition-all duration-700 h-full top-0 left-0 ${
           isNavbarOpened ? "opacity-100 w-full" : "opacity-0 w-0"
@@ -102,14 +102,13 @@ function Navbar() {
           onClick={handleToggle}
         />
         <Link href="/" className="relative w-[6.75rem] h-[2.85rem]">
-          
           <Image
             src={Logo}
             alt="Maibo"
             fill
             className=" object-cover object-center"
           />
-{/* 
+          {/* 
           <Image
             src={LogoIcon}
             alt="Maibo"
@@ -225,6 +224,7 @@ function SearchModal({ opened, handle }) {
 function Cart({ opened, handle }) {
   const { products } = useSelector((state) => state.cart);
   const { isAuthenticated, user } = useSelector((state) => state.auth);
+  const { rate } = useSelector((state) => state.exchangeRate);
   const dispatch = useDispatch();
   const [totalPrice, setTotalPrice] = useState(0);
   const router = useRouter();
@@ -242,7 +242,7 @@ function Cart({ opened, handle }) {
       name: product.name,
       quantity: product.quantity,
       image: product.productImage,
-      price: product.discountedPrice || product.originalPrice,
+      price: product.discountedPrice * rate || product.originalPrice * rate,
     }));
 
     try {
@@ -276,8 +276,8 @@ function Cart({ opened, handle }) {
       let price = 0;
       products.forEach((item) => {
         price += item?.discountedPrice
-          ? item?.discountedPrice * item.quantity
-          : item?.originalPrice * item.quantity;
+          ? item?.discountedPrice * rate * item.quantity
+          : item?.originalPrice * rate * item.quantity;
       });
 
       setTotalPrice(price);
@@ -292,7 +292,7 @@ function Cart({ opened, handle }) {
         }
       }
     }
-  }, [dispatch, products]);
+  }, [dispatch, products, rate]);
   return (
     <>
       <span

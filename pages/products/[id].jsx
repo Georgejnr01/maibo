@@ -11,6 +11,7 @@ function Product({ product }) {
   const dispatch = useDispatch();
   const [adding, setAdding] = useState(false);
   const { products } = useSelector((state) => state.cart);
+  const { rate } = useSelector((state) => state.exchangeRate);
   const [isProductDetailsOpened, setProductDetailsState] = useState(false);
 
   const handleToggle = () => {
@@ -26,7 +27,7 @@ function Product({ product }) {
   };
 
   const checkIfAlreadyAdded = () => {
-    let item = products.find((d) => d._id === product._id);
+    let item = products.find((d) => d?._id === product?._id);
     if (item) {
       return true;
     }
@@ -45,20 +46,22 @@ function Product({ product }) {
               (max-width: 1200px) 50vw,
               33vw"
               alt="image"
-              className="object-contain object-center0"
-            />
-          </span>
-          <span className="relative block min-h-[20rem] w-full">
-            <Image
-              fill
-              sizes="(max-width: 768px) 100vw,
-              (max-width: 1200px) 50vw,
-              33vw"
-              src={product?.productImage2}
-              alt="image"
               className="object-contain object-center"
             />
           </span>
+          {product?.productImage2 && (
+            <span className="relative block min-h-[20rem] w-full">
+              <Image
+                fill
+                sizes="(max-width: 768px) 100vw,
+              (max-width: 1200px) 50vw,
+              33vw"
+                src={product?.productImage2}
+                alt="image"
+                className="object-contain object-center"
+              />
+            </span>
+          )}
         </div>
         <div className="p-10 lg:h-screen lg:sticky top-20 md:px-16 lg:px-32 md:py-16">
           <span className="text-xs md:text-sm">
@@ -68,7 +71,9 @@ function Product({ product }) {
             <h4 className="mb-1">{product?.name}</h4>
             <p className="mt-3 text-xs md:text-sm">
               {product?.discountedPrice !== product?.originalPrice &&
-                `${formatter.format(product?.discountedPrice)} from `}{" "}
+                `${formatter.format(
+                  product?.discountedPrice * rate
+                )} from `}{" "}
               <span
                 className={`${
                   product?.discountedPrice !== product?.originalPrice
@@ -76,7 +81,7 @@ function Product({ product }) {
                     : ""
                 }`}
               >
-                {formatter.format(product?.originalPrice)}
+                {formatter.format(product?.originalPrice * rate)}
               </span>
             </p>
           </span>
@@ -139,7 +144,7 @@ export const getStaticPaths = async () => {
   const products = await sanityClient.fetch(productQuery);
   const paths = products.map((product) => ({
     params: {
-      id: product._id,
+      id: product?._id,
     },
   }));
 
@@ -163,7 +168,7 @@ export const getStaticProps = async ({ params }) => {
   }`;
 
   const product = await sanityClient.fetch(productQuery, {
-    id: params.id,
+    id: params?.id,
   });
 
   if (!product) {
