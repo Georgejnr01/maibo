@@ -27,12 +27,12 @@ export default {
     {
       name: "discountedPrice",
       type: "number",
-      title: "Discounted Price",
+      title: "Discounted Price (in Yuan)",
     },
     {
       name: "originalPrice",
       type: "number",
-      title: "Original Price",
+      title: "Original Price (in Yuan)",
     },
     {
       name: "productImage",
@@ -49,6 +49,17 @@ export default {
       options: {
         hotspot: true, // <-- Defaults to false
       },
+    },
+    {
+      title: "Category",
+      name: "category",
+      type: "array",
+      of: [
+        {
+          type: "reference",
+          to: [{ type: "category" }],
+        },
+      ],
     },
   ],
   initialValue: {

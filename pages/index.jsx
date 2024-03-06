@@ -1,13 +1,11 @@
 import { Analytics } from "@vercel/analytics/react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-import { BsArrowRight, BsFillPlayCircleFill } from "react-icons/bs";
+import { useState } from "react";
+import { BsArrowRight } from "react-icons/bs";
 import { toast } from "react-toastify";
 import Card from "../components/Card";
 import { sanityClient } from "../sanity";
-import MyTimer from "../components/Timer";
 import LiveTimer from "../components/LiveTimer";
 
 export default function Home({ products, testimonials, categories }) {
@@ -30,6 +28,7 @@ export default function Home({ products, testimonials, categories }) {
           fill
           src="/assets/banner.jpg"
           alt="demo"
+          priority
           className="object-cover object-center"
         />
         <div className="absolute top-0 left-0 grid w-full h-full place-items-end bg-black/40">
@@ -49,10 +48,10 @@ export default function Home({ products, testimonials, categories }) {
         </div>
       </div>
       <div className="mb-16">
-        <span className="block text-center mx-auto">
-          <h2 className=" mb-2 text-2xl font-medium md:text-4xl">
+        <span className="block mx-auto text-center">
+          <h2 className="mb-2 text-2xl font-medium md:text-4xl">
             Christmas up to 70% off{" "}
-            <div className=" text-red-500 ">
+            <div className="text-red-500 ">
               <LiveTimer />{" "}
             </div>
           </h2>
@@ -78,6 +77,7 @@ export default function Home({ products, testimonials, categories }) {
                   src="/assets/100000584.jpg"
                   alt="image"
                   fill
+                  priority
                   sizes="(max-width: 768px) 100vw,
                   (max-width: 1200px) 50vw,
                   33vw"
@@ -150,23 +150,23 @@ export default function Home({ products, testimonials, categories }) {
       </div> */}
       <div className="relative w-full min-h-[30vh] px-5 group md:px-16">
         <div className="">Categories</div>
-        <div className="gridImages w-full h-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 mt-4">
+        <div className="grid w-full h-full grid-cols-2 gap-2 mt-4 gridImages md:grid-cols-3 lg:grid-cols-4">
           {categories.map((cat) => (
             <Link
               href={`/collections/${cat.slug}`}
               key={cat._id}
               className="prodct relative flex items-center justify-center w-full h-[200px]"
             >
-              <div className="bg-black/60 w-full h-full absolute top-0 -z-20"></div>
+              <div className="absolute top-0 w-full h-full bg-black/60 -z-20"></div>
               <Image
                 src="/assets/bag.png"
                 alt="image"
                 width="300"
                 height="150"
-                className="object-cover absolute -z-50"
+                className="absolute object-cover -z-50"
               />
 
-              <div className="text-center text-white z-10">{cat.name}</div>
+              <div className="z-10 text-center text-white">{cat.name}</div>
             </Link>
           ))}
         </div>
