@@ -50,12 +50,12 @@ export default function Home({ products, testimonials, categories }) {
       </div>
       <div className="mb-16">
         <span className="block text-center mx-auto">
-          <h2 className=" mb-2 text-2xl font-medium md:text-4xl">
+          {/* <h2 className=" mb-2 text-2xl font-medium md:text-4xl">
             Christmas up to 70% off{" "}
             <div className=" text-red-500 ">
               <LiveTimer />{" "}
             </div>
-          </h2>
+          </h2> */}
           {/*   <p className="text-sm md:text-base">
             Functional products made of luxurious materials to improve
             people&apos;s lives in small but mighty ways.
