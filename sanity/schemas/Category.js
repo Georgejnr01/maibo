@@ -17,6 +17,11 @@ const CategorySchema = {
       },
     },
     {
+      name: "image",
+      type: "image",
+      title: "Image",
+    },
+    {
       name: "description",
       type: "string",
       title: "Category Description",

@@ -155,11 +155,11 @@ export default function Home({ products, testimonials, categories }) {
             <Link
               href={`/collections/${cat.slug}`}
               key={cat._id}
-              className="prodct relative flex items-center justify-center w-full h-[200px]"
+              className="prodct overflow-hidden relative flex items-center justify-center w-full h-[200px]"
             >
               <div className="absolute top-0 w-full h-full bg-black/60 -z-20"></div>
               <Image
-                src="/assets/bag.png"
+                src={cat?.image}
                 alt="image"
                 width="300"
                 height="150"
@@ -228,6 +228,7 @@ export async function getServerSideProps() {
     _id,
     name,
    "slug": slug.current,
+   "image": image.asset -> url,
   }`;
 
   const categories = await sanityClient.fetch(categoryQuery);
