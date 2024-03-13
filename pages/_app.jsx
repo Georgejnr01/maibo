@@ -1,3 +1,4 @@
+import { Analytics } from "@vercel/analytics/react";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Provider } from "react-redux";
@@ -6,7 +7,6 @@ import "react-toastify/dist/ReactToastify.css";
 import Layout from "../layouts/main";
 import { store } from "../redux/store";
 import "../styles/globals.css";
-import { Analytics } from '@vercel/analytics/react';
 
 function Loading() {
   const router = useRouter();
@@ -33,36 +33,42 @@ function Loading() {
   });
 
   return loading ? (
-    <div className="fixed z-[200] top-0 left-0 bg-black/30 w-screen h-1">
-      <div className="w-5 h-full bg-black global-loader"></div>
+    <div className="fixed z-[200] top-0 left-0 bg-red-600/30 w-screen h-1">
+      <div className="w-5 h-full bg-red-600 global-loader"></div>
     </div>
   ) : (
-    <div className="fixed z-[200] top-0 left-0 bg-black/30 w-screen h-1 global-loader-finished">
-      <div className="w-full h-full bg-black"></div>
+    <div className="fixed z-[200] top-0 left-0 bg-red-600/30 w-screen h-1 global-loader-finished">
+      <div className="w-full h-full bg-red-600"></div>
     </div>
   );
 }
 
 function MyApp({ Component, pageProps }) {
+  const router = useRouter();
+  const pathname = router.pathname;
   return (
     <Provider store={store}>
-      <Layout>
-      <Analytics />
-        <ToastContainer
-          position="top-right"
-          autoClose={2000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="dark"
-        />
-        <Loading />
+      {!pathname.includes("/studio") ? (
+        <Layout>
+          <Analytics />
+          <ToastContainer
+            position="top-right"
+            autoClose={2000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="dark"
+          />
+          <Loading />
+          <Component {...pageProps} />
+        </Layout>
+      ) : (
         <Component {...pageProps} />
-      </Layout>
+      )}
     </Provider>
   );
 }

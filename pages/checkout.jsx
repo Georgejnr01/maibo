@@ -6,9 +6,10 @@ import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { db } from "../firebase";
 import useGetUser from "../hooks/useGetUser";
+import { sanityClient } from "../sanity";
 import { formatter } from "../utils/Formatter";
 
-function Checkout() {
+function Checkout({ shippingFee }) {
   const router = useRouter();
   const [order_id, setOrderId] = useState("");
   const { isAuthenticated, isVerifying, user } = useSelector(
@@ -21,11 +22,11 @@ function Checkout() {
   const [successful, setSuccess] = useState(false);
 
   useEffect(() => {
-    if (totalPrice === 0 && isAuthenticated) {
+    if (totalPrice === 0 && isAuthenticated && !router?.query?.order_id) {
       router.push("/");
       toast.error("No valid order");
     } else if (isAuthenticated) {
-      setOrderId(router?.query?.order_id);
+      setOrderId(router?.query?.order_id || "");
     }
   }, [totalPrice, router, isAuthenticated]);
 
@@ -305,7 +306,7 @@ function Checkout() {
               <div className="flex justify-between mt-4 mb-8 total">
                 <div className="font-medium">SHIPPING</div>
                 <div className="font-medium text-[#3A3A3A]">
-                  {formatter.format(200)}
+                  {formatter.format(shippingFee?.fee || 0)}
                 </div>
               </div>
 
@@ -325,7 +326,7 @@ function Checkout() {
         </div>
 
         <div className="w-full mt-14 md:w-[50%]">
-          <div className="mt-14 md:w-[50%] md:order-1">
+          {/* <div className="mt-14 md:w-[50%] md:order-1">
             <div className="pb-2 text-base font-extrabold border-b border-b-zinc-200">
               PAYMENT
             </div>
@@ -354,7 +355,7 @@ function Checkout() {
                 &quot;ProClassics&quot; Order Confirmation page afterwards.
               </div>
             </div>
-          </div>
+          </div> */}
           <div className="mt-6 text-xs leading-relaxed opacity-90">
             By clicking Pay, you agree to purchase your item(s) from ProClassics
             as merchant of record for this transaction, on ProClassics&apos;s
@@ -366,7 +367,7 @@ function Checkout() {
             style={{
               opacity: gettingUser || paying || successful ? "0.5" : "1",
             }}
-            className="bg-[#3A3A3A] text-white py-4 w-full mt-10 text-center text-sm"
+            className="bg-[#212121] text-white py-4 w-full mt-10 text-center text-sm"
           >
             {paying ? "PAYING" : "PAY"}
           </button>
@@ -377,3 +378,17 @@ function Checkout() {
 }
 
 export default Checkout;
+
+export async function getServerSideProps() {
+  const shippingQuery = `*[_type == 'shipping'][0]{
+    fee,
+  }`;
+
+  const shippingFee = await sanityClient.fetch(shippingQuery);
+
+  return {
+    props: {
+      shippingFee,
+    },
+  };
+}

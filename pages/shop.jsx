@@ -47,9 +47,8 @@ function Shop({ products, categories }) {
         });
       });
     };
-    if (category.length > 0 && sortBy) {
-      getSearch();
-    }
+
+    getSearch();
   }, [category, sortBy]);
 
   const handleCategory = (e) => {
@@ -62,7 +61,11 @@ function Shop({ products, categories }) {
   };
 
   const handleApply = () => {
-    setApply(true);
+    if (category.length === 0) {
+      setApply(false);
+    } else {
+      setApply(true);
+    }
     setData(dataToApply);
     handleFilterToggle();
   };
@@ -87,44 +90,48 @@ function Shop({ products, categories }) {
         >
           Close
         </button>
-        <div className="space-y-6 mb-6">
-          <div className="px-5">
-            <span className="flex items-center justify-between mb-5 text-xs font-medium uppercase">
-              <h4>Category {category.length > 0 && `(${category.length})`}</h4>
-              {isCategoryOpened ? (
-                <BiMinus
-                  className="w-4 h-4 cursor-pointer"
-                  onClick={() => setCategoryState(false)}
-                />
-              ) : (
-                <BiPlus
-                  className="w-4 h-4 cursor-pointer"
-                  onClick={() => setCategoryState(true)}
-                />
-              )}
-            </span>
-            <ul
-              className={` overflow-hidden text-xs space-y-5 transition-all duration-200 ${
-                isCategoryOpened ? "h-fit" : "h-0"
-              }`}
-            >
-              {categories.map((c) => (
-                <li key={c._id} className="flex items-center space-x-2">
-                  <input
-                    type="checkbox"
-                    name={c.name}
-                    value={c.slug}
-                    id={c._id}
-                    className="bg-black cursor-pointer"
-                    onChange={handleCategory}
+        <div className="mb-6 space-y-6">
+          {categories?.length > 0 && (
+            <div className="px-5">
+              <span className="flex items-center justify-between mb-5 text-xs font-medium uppercase">
+                <h4>
+                  Category {category.length > 0 && `(${category.length})`}
+                </h4>
+                {isCategoryOpened ? (
+                  <BiMinus
+                    className="w-4 h-4 cursor-pointer"
+                    onClick={() => setCategoryState(false)}
                   />
-                  <label htmlFor={c._id} className="cursor-pointer">
-                    {c.name}
-                  </label>
-                </li>
-              ))}
-            </ul>
-          </div>
+                ) : (
+                  <BiPlus
+                    className="w-4 h-4 cursor-pointer"
+                    onClick={() => setCategoryState(true)}
+                  />
+                )}
+              </span>
+              <ul
+                className={` overflow-hidden text-xs space-y-5 transition-all duration-200 ${
+                  isCategoryOpened ? "h-fit" : "h-0"
+                }`}
+              >
+                {categories.map((c) => (
+                  <li key={c._id} className="flex items-center space-x-2">
+                    <input
+                      type="checkbox"
+                      name={c.name}
+                      value={c.slug}
+                      id={c._id}
+                      className="bg-black cursor-pointer"
+                      onChange={handleCategory}
+                    />
+                    <label htmlFor={c._id} className="cursor-pointer">
+                      {c.name}
+                    </label>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
           <div className="px-5">
             <span className="flex items-center justify-between mb-5 text-xs font-medium uppercase">
               <h4>Sort by</h4>
@@ -238,15 +245,25 @@ function Shop({ products, categories }) {
         )}
         {!apply ? (
           <>
-            {products.length > 0 &&
+            {products.length > 0 ? (
               products.map((product) => (
                 <Card key={product._id} data={product} />
-              ))}
+              ))
+            ) : (
+              <p className="text-sm text-center text-black/70">
+                No product found
+              </p>
+            )}
           </>
         ) : (
           <>
-            {data.length > 0 &&
-              data.map((product) => <Card key={product._id} data={product} />)}
+            {data.length > 0 ? (
+              data.map((product) => <Card key={product._id} data={product} />)
+            ) : (
+              <p className="text-sm text-center text-black/70">
+                No product found
+              </p>
+            )}
           </>
         )}
       </div>

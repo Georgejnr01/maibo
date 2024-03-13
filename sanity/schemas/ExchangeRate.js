@@ -13,7 +13,7 @@ export default {
       name: "rate",
       type: "number",
       title: "Rate",
-      description: "Exchange rate from - to usd",
+      description: "Exchange rate from - Yuan to NGN",
     },
   ],
 };
