@@ -44,6 +44,27 @@ function Checkout({ shippingFee }) {
     }
   }, [totalPrice, router, isAuthenticated]);
 
+  useEffect(() => {
+    let getOrders = "";
+    const getProdDetails = async (order_id) => {
+      try {
+        const docSnap = await getDoc(doc(db, "orders", order_id));
+        docSnap.data().order.map((i) => {
+          getOrders += `Product Name:${i.name} Quantity Ordered:${
+            i.quantity
+          } Price:${i.price} Total Price:${i.price * i.quantity} Link:${
+            i.link
+          } \n`;
+        });
+      } catch (error) {
+        console.log(error.message);
+      }
+      setOrders(getOrders);
+    };
+    getProdDetails(order_id);
+    console.log(orders);
+  }, [order_id]);
+
   const config = {
     public_key: process.env.NEXT_PUBLIC_FLUTTERWAVE_PUBLIC_KEY,
     tx_ref: Date.now(),
@@ -151,27 +172,6 @@ function Checkout({ shippingFee }) {
     }
     return handlePaymentByCrypto(data);
   };
-
-  useEffect(() => {
-    let getOrders = "";
-    const getProdDetails = async (order_id) => {
-      try {
-        const docSnap = await getDoc(doc(db, "orders", order_id));
-        docSnap.data().order.map((i) => {
-          getOrders += `Product Name:${i.name} Quantity Ordered:${
-            i.quantity
-          } Price:${i.price} Total Price:${i.price * i.quantity} Link:${
-            i.link
-          } \n`;
-        });
-      } catch (error) {
-        console.log(error.message);
-      }
-      setOrders(getOrders);
-    };
-    getProdDetails(order_id);
-    console.log(orders);
-  }, [order_id]);
 
   const sendSellerEmail = () => {
     emailjs
