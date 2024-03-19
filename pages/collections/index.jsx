@@ -10,16 +10,16 @@ function Index({ categories }) {
         <Link
           href={`/collections/${cat.slug}`}
           key={cat._id}
-          className="product relative flex items-center justify-center w-full h-[200px]"
+          className="product overflow-hidden relative flex items-center justify-center w-full h-[200px]"
         >
           <div className="absolute top-0 w-full h-full bg-black/40 -z-20"></div>
-          {/* <Image
-            src="/assets/bag.png"
+          <Image
+            src={cat.image}
             alt="image"
             width="300"
             height="150"
             className="absolute object-cover -z-50"
-          /> */}
+          />
 
           <div className="z-10 text-center text-white">{cat.name}</div>
         </Link>
@@ -35,6 +35,7 @@ export async function getServerSideProps() {
       _id,
       name,
      "slug": slug.current,
+     "image": image.asset -> url,
     }`;
 
   const categories = await sanityClient.fetch(categoryQuery);

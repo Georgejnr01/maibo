@@ -9,6 +9,8 @@ import Card from "../components/Card";
 import { sanityClient } from "../sanity";
 import MyTimer from "../components/Timer";
 import LiveTimer from "../components/LiveTimer";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../firebase";
 
 export default function Home({ products, testimonials, categories }) {
   const [isPlayed, setPlayState] = useState(false);
@@ -155,11 +157,11 @@ export default function Home({ products, testimonials, categories }) {
             <Link
               href={`/collections/${cat.slug}`}
               key={cat._id}
-              className="prodct relative flex items-center justify-center w-full h-[200px]"
+              className="prodct overflow-hidden relative flex items-center justify-center w-full h-[200px]"
             >
               <div className="bg-black/60 w-full h-full absolute top-0 -z-20"></div>
               <Image
-                src="/assets/bag.png"
+                src={cat.image}
                 alt="image"
                 width="300"
                 height="150"
@@ -228,6 +230,7 @@ export async function getServerSideProps() {
     _id,
     name,
    "slug": slug.current,
+   "image": image.asset -> url,
   }`;
 
   const categories = await sanityClient.fetch(categoryQuery);

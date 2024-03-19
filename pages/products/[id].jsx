@@ -161,6 +161,7 @@ export const getStaticProps = async ({ params }) => {
     description,
     new,
     inStock,
+    productLink,
     discountedPrice,
     originalPrice,
     "productImage": productImage.asset->url,

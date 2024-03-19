@@ -1,13 +1,14 @@
-import { doc, updateDoc } from "firebase/firestore";
+import { doc, updateDoc, getDoc } from "firebase/firestore";
 import { closePaymentModal, useFlutterwave } from "flutterwave-react-v3";
 import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { db } from "../firebase";
 import useGetUser from "../hooks/useGetUser";
 import { sanityClient } from "../sanity";
 import { formatter } from "../utils/Formatter";
+import emailjs from "@emailjs/browser";
 
 function Checkout({ shippingFee }) {
   const router = useRouter();
@@ -20,6 +21,19 @@ function Checkout({ shippingFee }) {
   const { data, isLoading: gettingUser } = useGetUser(user.uid);
   const [paying, setPaying] = useState(false);
   const [successful, setSuccess] = useState(false);
+  const [orders, setOrders] = useState("");
+  const [userData, setUserData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    address1: "",
+    address2: "",
+    city: "",
+    zipcode: "",
+    phone: "",
+  });
+  const [emailConfirm, setEmailConfirm] = useState(false);
+  const form = useRef();
 
   useEffect(() => {
     if (totalPrice === 0 && isAuthenticated && !router?.query?.order_id) {
@@ -34,7 +48,7 @@ function Checkout({ shippingFee }) {
     public_key: process.env.NEXT_PUBLIC_FLUTTERWAVE_PUBLIC_KEY,
     tx_ref: Date.now(),
     amount: totalPrice,
-    currency: "USD",
+    currency: "NGN",
     payment_options: "ussd, card, mobilemoney",
     // redirect_url: "http://localhost:3000/",
     customer: {
@@ -68,6 +82,7 @@ function Checkout({ shippingFee }) {
       checkoutDetails: data,
     }).finally(() => {
       setPaying(false);
+      sendSellerEmail();
     });
   };
 
@@ -137,8 +152,62 @@ function Checkout({ shippingFee }) {
     return handlePaymentByCrypto(data);
   };
 
+  useEffect(() => {
+    let getOrders = "";
+    const getProdDetails = async (order_id) => {
+      try {
+        const docSnap = await getDoc(doc(db, "orders", order_id));
+        docSnap.data().order.map((i) => {
+          getOrders += `Product Name:${i.name} Quantity Ordered:${
+            i.quantity
+          } Price:${i.price} Total Price:${i.price * i.quantity} Link:${
+            i.link
+          } \n`;
+        });
+      } catch (error) {
+        console.log(error.message);
+      }
+      setOrders(getOrders);
+    };
+    getProdDetails(order_id);
+    console.log(orders);
+  }, [order_id]);
+
+  const sendSellerEmail = () => {
+    emailjs
+      .sendForm("service_r462hoa", "template_evij4iw", form.current, {
+        publicKey: "54xX0RxWn1uBV9pgg",
+      })
+      .then(
+        () => {
+          console.log("Email successfully sent");
+        },
+        (error) => {
+          console.log("FAILED...", error);
+        }
+      );
+  };
+
   return (
     <div className="px-5 mt-20 md:px-16 text-[#3A3A3A]">
+      {/* Emailjs form */}
+      <form ref={form} className="hidden" onSubmit={sendSellerEmail}>
+        <input
+          type="text"
+          name="name"
+          value={`${userData.firstName} ${userData.lastName}`}
+          readOnly
+        />
+        <input type="email" name="email" value={userData.email} readOnly />
+        <input name="city" value={userData.city} readOnly />
+        <input name="address1" value={userData.address1} readOnly />
+        <input name="address2" value={userData.address2} readOnly />
+        <input name="zipCode" value={userData.zipcode} readOnly />
+        <input name="phone" value={userData.phone} readOnly />
+        <textarea name="message" value={orders} readOnly />
+        <input type="submit" value="Send" />
+      </form>
+
       <form onSubmit={handleSubmit}>
         <div className="w-full md:flex md:justify-between md:items-start md:gap-x-8">
           <div className="billings md:w-[50%] text-[#3A3A3A] md:mt-0">
@@ -158,6 +227,13 @@ function Checkout({ shippingFee }) {
                   type="text"
                   name="firstName"
                   id="firstName"
+                  value={userData.firstName}
+                  onChange={(e) =>
+                    setUserData((userData) => ({
+                      ...userData,
+                      firstName: e.target.value,
+                    }))
+                  }
                   required
                   className="p-2 text-sm bg-transparent border-b outline-none shadow-b-xl border-b-zinc-200"
                 />
@@ -174,6 +250,13 @@ function Checkout({ shippingFee }) {
                   type="text"
                   name="lastName"
                   id="lastName"
+                  value={userData.lastName}
+                  onChange={(e) =>
+                    setUserData((userData) => ({
+                      ...userData,
+                      lastName: e.target.value,
+                    }))
+                  }
                   required
                   className="p-2 text-sm bg-transparent border-b outline-none shadow-b-xl border-b-zinc-200"
                 />
@@ -190,6 +273,13 @@ function Checkout({ shippingFee }) {
                   type="email"
                   name="email"
                   id="email"
+                  value={userData.email}
+                  onChange={(e) =>
+                    setUserData((userData) => ({
+                      ...userData,
+                      email: e.target.value,
+                    }))
+                  }
                   required
                   className="p-2 text-sm bg-transparent border-b outline-none shadow-b-xl border-b-zinc-200"
                 />
@@ -222,6 +312,13 @@ function Checkout({ shippingFee }) {
                   type="text"
                   name="addressLine1"
                   id="addressLine1"
+                  value={userData.address1}
+                  onChange={(e) =>
+                    setUserData((userData) => ({
+                      ...userData,
+                      address1: e.target.value,
+                    }))
+                  }
                   required
                   className="p-2 text-sm bg-transparent border-b outline-none shadow-b-xl border-b-zinc-200"
                 />
@@ -238,6 +335,13 @@ function Checkout({ shippingFee }) {
                   type="text"
                   name="addressLine2"
                   id="addressLine2"
+                  value={userData.address2}
+                  onChange={(e) =>
+                    setUserData((userData) => ({
+                      ...userData,
+                      address2: e.target.value,
+                    }))
+                  }
                   className="p-2 text-sm bg-transparent border-b outline-none shadow-b-xl border-b-zinc-200"
                 />
               </div>
@@ -253,6 +357,13 @@ function Checkout({ shippingFee }) {
                   type="text"
                   name="city"
                   id="city"
+                  value={userData.city}
+                  onChange={(e) =>
+                    setUserData((userData) => ({
+                      ...userData,
+                      city: e.target.value,
+                    }))
+                  }
                   required
                   className="p-2 text-sm bg-transparent border-b outline-none shadow-b-xl border-b-zinc-200"
                 />
@@ -269,6 +380,13 @@ function Checkout({ shippingFee }) {
                   type="text"
                   name="zipCode"
                   id="zipCode"
+                  value={userData.zipcode}
+                  onChange={(e) =>
+                    setUserData((userData) => ({
+                      ...userData,
+                      zipcode: e.target.value,
+                    }))
+                  }
                   required
                   className="p-2 text-sm bg-transparent border-b outline-none shadow-b-xl border-b-zinc-200"
                 />
@@ -286,6 +404,13 @@ function Checkout({ shippingFee }) {
                   type="text"
                   name="phone_number"
                   id="phone"
+                  value={userData.phone}
+                  onChange={(e) =>
+                    setUserData((userData) => ({
+                      ...userData,
+                      phone: e.target.value,
+                    }))
+                  }
                   required
                   className="p-2 text-sm bg-transparent border-b outline-none shadow-b-xl border-b-zinc-200"
                 />

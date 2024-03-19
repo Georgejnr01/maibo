@@ -240,6 +240,7 @@ function Cart({ opened, handle }) {
     const OrderedProducts = products.map((product) => ({
       id: product._id,
       name: product.name,
+      link: product.productLink,
       quantity: product.quantity,
       image: product.productImage,
       price: product.discountedPrice * rate || product.originalPrice * rate,

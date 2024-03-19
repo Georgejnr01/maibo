@@ -15,6 +15,11 @@ export default {
       title: "Product Description",
     },
     {
+      name: "productLink",
+      type: "string",
+      title: "Product Link",
+    },
+    {
       name: "new",
       type: "boolean",
       title: "New Stock",
