@@ -22,7 +22,7 @@ function Shop({ products, categories }) {
   useEffect(() => {
     const getSearch = async () => {
       category.forEach(async (cat) => {
-        const query = `*[_type == 'product' && $collection in categories[]->slug.current] | order(${sortBy}){
+        const query = `*[_type == 'product' && $collection in category[]->slug.current] | order(${sortBy}){
           _id,
           name,
           inStock,

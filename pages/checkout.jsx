@@ -32,7 +32,6 @@ function Checkout({ shippingFee }) {
     zipcode: "",
     phone: "",
   });
-  const [emailConfirm, setEmailConfirm] = useState(false);
   const form = useRef();
 
   useEffect(() => {

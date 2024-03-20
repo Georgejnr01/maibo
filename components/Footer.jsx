@@ -24,7 +24,7 @@ function Footer() {
                 Collections
               </Link>
             </li>
-            {["necklace", "bags"].map((d) => (
+            {["clothes", "bags"].map((d) => (
               <li key={d} className="mb-3 capitalize last:mb-0">
                 <Link
                   href={`/collections/${d}`}

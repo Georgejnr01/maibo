@@ -57,7 +57,7 @@ function Card({ data }) {
           )}
         </span>
         <span>
-          <h3 className="mt-4 text-xs transition-all duration-150 md:text-sm">
+          <h3 className="mt-4 text-xs transition-all h-[40px] overflow-hidden duration-150 md:text-sm">
             {data?.name}
           </h3>
           <p className="mt-3 text-xs md:text-sm">

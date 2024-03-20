@@ -65,7 +65,7 @@ export default function Home({ products, testimonials, categories }) {
         </span>
         <div className="grid grid-cols-2 gap-6 mt-12 md:gap-12 md:grid-cols-3 lg:grid-cols-4">
           {products.length > 0 &&
-            products.map((product) => (
+            products.slice(0, 4).map((product) => (
               <Card key={product._id} data={product} />
             ))}
         </div>
@@ -74,10 +74,10 @@ export default function Home({ products, testimonials, categories }) {
         <h3 className="text-xl md:text-2xl">Back in stock!</h3>
         <div className="grid gap-3 mt-5 gird-cols-1 md:grid-cols-3">
           <div className="md:col-span-2">
-            <Link href="/collections/necklace" className="block group">
+            <Link href="/collections/clothes" className="block group">
               <span className="relative block h-64 lg:h-[50rem] md:h-96 w-full overflow-hidden">
                 <Image
-                  src="/assets/100000584.jpg"
+                  src="/assets/shirt.jpg"
                   alt="image"
                   fill
                   sizes="(max-width: 768px) 100vw,
@@ -87,7 +87,7 @@ export default function Home({ products, testimonials, categories }) {
                 />
               </span>
               <span className="flex items-center py-2 mt-3 space-x-3">
-                <span>Necklace</span>
+                <span>Clothes</span>
                 <BsArrowRight className="w-6 h-6 transition-all duration-200 group-hover:w-8" />
               </span>
             </Link>
@@ -98,7 +98,7 @@ export default function Home({ products, testimonials, categories }) {
               <Link href="/collections/wrist-watch" className="block group">
                 <span className="relative block w-full h-64 overflow-hidden md:h-80">
                   <Image
-                    src="/assets/wristwatch.jpg"
+                    src="/assets/bag.jpg"
                     alt="image"
                     sizes="(max-width: 768px) 100vw,
                     (max-width: 1200px) 50vw,
@@ -108,7 +108,7 @@ export default function Home({ products, testimonials, categories }) {
                   />
                 </span>
                 <span className="flex items-center py-3 mt-3 space-x-3">
-                  <span>Wrist watch</span>
+                  <span>Bags</span>
                   <BsArrowRight className="w-6 h-6 transition-all duration-200 group-hover:w-8" />
                 </span>
               </Link>

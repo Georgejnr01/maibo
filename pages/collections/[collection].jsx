@@ -39,7 +39,7 @@ export const getStaticPaths = async () => {
 };
 
 export const getStaticProps = async ({ params }) => {
-  const productsQuery = `*[_type == 'product' && $collection in categories[]->slug.current]{
+  const productsQuery = `*[_type == 'product' && $collection in category[]->slug.current]{
       _id,
       name,
       description,
