@@ -135,6 +135,7 @@ function Product({ product }) {
             <div className="grid grid-cols-2">
               {product?.colors.map((i) => (
                 <button
+                  key={i._id}
                   onClick={() => {setColor({ color: i.color, image: i.image }); handleClickScroll(i.color)}}
                   className={`mt-[5px] p-[5px] lg:p-[10px] border-[1px] ${
                     color.color == i.color
@@ -144,7 +145,7 @@ function Product({ product }) {
                 >
                   {i.image != null && (
                     <div className="lg:w-[35px] w-[25px] lg:h-[35px] h-[25px] relative mr-[15px] bg-gray">
-                      <Image fill src={i.image} />
+                      <Image fill src={i.image} alt="colorImg"/>
                     </div>
                   )}
                   {i.color != null && (
@@ -171,6 +172,7 @@ function Product({ product }) {
             <div className="grid grid-cols-2">
               {product?.sizes.map((i) => (
                 <button
+                  key={i._id}
                   onClick={() => {setSize({ size: i.size, image: i.image }); handleClickScroll(i.size)}}
                   className={`mt-[10px] p-[5px] lg:p-[10px] border-[1px] ${
                     size.size == i.size ? "border-black" : "border-transparent"
@@ -178,7 +180,7 @@ function Product({ product }) {
                 >
                   {i.image != null && (
                     <div className="lg:w-[35px] w-[25px] lg:h-[35px] h-[25px] relative mr-[15px] bg-gray">
-                      <Image fill src={i.image} />
+                      <Image fill src={i.image} alt="sizeImg"/>
                     </div>
                   )}
                   {i.size != null && (

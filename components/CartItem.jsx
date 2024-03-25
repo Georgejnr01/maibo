@@ -23,7 +23,7 @@ function CartItem({ product }) {
               <div className="font-bold mr-[5px]">Color:</div>
               {product?.color.image !== null && (
                 <div className="w-[15px] h-[15px] relative bg-gray mr-[5px]">
-                  <Image src={product?.color.image} fill />
+                  <Image src={product?.color.image} fill  alt="colorImg"/>
                 </div>
               )}
               {product?.color.color !== null && (
@@ -34,7 +34,7 @@ function CartItem({ product }) {
               <div className="font-bold mr-[5px]">Size:</div>
               {product?.size.image !== null && (
                 <div className="w-[15px] h-[15px] relative bg-gray mr-[5px]">
-                  <Image src={product?.size.image} fill />
+                  <Image src={product?.size.image} fill alt="sizeImg"/>
                 </div>
               )}
               {product?.size.size !== null && <div>{product?.size.size}</div>}
