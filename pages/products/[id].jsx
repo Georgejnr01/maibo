@@ -18,13 +18,6 @@ function Product({ product }) {
   const [color, setColor] = useState({ color: "", image: "" });
   const [size, setSize] = useState({ size: "", image: "" });
 
-  const handleClickScroll = (value) => {
-    const element = document.getElementById(value);
-    if (element) {
-      element.scrollIntoView({behavior: 'smooth'});
-    }
-  }
-
   const handleToggle = () => {
     setProductDetailsState(!isProductDetailsOpened);
   };
@@ -136,7 +129,7 @@ function Product({ product }) {
               {product?.colors !== null && product?.colors.map((i) => (
                 <button
                   key={i._id}
-                  onClick={() => {setColor({ color: i.color, image: i.image }); handleClickScroll(i.color)}}
+                  onClick={() => {setColor({ color: i.color, image: i.image })}}
                   className={`mt-[5px] p-[5px] lg:p-[10px] border-[1px] ${
                     color.color == i.color
                       ? "border-black"
@@ -173,7 +166,7 @@ function Product({ product }) {
               {product?.sizes !== null && product?.sizes.map((i) => (
                 <button
                   key={i._id}
-                  onClick={() => {setSize({ size: i.size, image: i.image }); handleClickScroll(i.size)}}
+                  onClick={() => {setSize({ size: i.size, image: i.image })}}
                   className={`mt-[10px] p-[5px] lg:p-[10px] border-[1px] ${
                     size.size == i.size ? "border-black" : "border-transparent"
                   } flex items-center justify-start`}
