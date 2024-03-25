@@ -62,7 +62,7 @@ function Product({ product }) {
                   />
                 </div>
               )}
-              {product?.colors.length > 0 &&
+              {product?.colors &&
                 product?.colors.map(
                   (i) =>
                     i.image !== null && (
@@ -76,7 +76,7 @@ function Product({ product }) {
                       </div>
                     )
                 )}
-              {product?.sizes.length > 0 &&
+              {product?.sizes &&
                 product?.sizes.map(
                   (i) =>
                     i.image !== null && (
@@ -126,7 +126,7 @@ function Product({ product }) {
           </button>
           <div
             className={`${
-              product?.colors.length > 0 ? "block" : "hidden"
+              product?.colors ? "block" : "hidden"
             } mt-[15px] lg:mt-[30px]`}
           >
             <div className="font-bold text-xs lg:text-sm">
@@ -163,7 +163,7 @@ function Product({ product }) {
           </div>
           <div
             className={`${
-              product?.sizes.length > 0 ? "block" : "hidden"
+              product?.sizes ? "block" : "hidden"
             } mt-[10px] lg:mt-[20px]`}
           >
             <div className="font-bold text-xs lg:text-sm">
