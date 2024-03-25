@@ -207,6 +207,7 @@ export default function Home({ products, testimonials, categories }) {
           <div className="overflow-scroll removeScroll flex text-nowrap">
             {categories.map((i) => (
               <button
+                key={i._id}
                 onClick={() => setActiveCat(i.name)}
                 className={`mx-5 text-sm py-[15px] ${
                   activeCat == i.name
