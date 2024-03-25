@@ -42,7 +42,6 @@ export default function Home({ products, testimonials, categories }) {
           collection: activeCat,
         }
       );
-      console.log(categorizedProducts);
       setcatProds(categorizedProducts);
     };
     getProds();
@@ -58,6 +57,7 @@ export default function Home({ products, testimonials, categories }) {
         <Image
           fill
           src="/assets/banner.jpg"
+          priority
           alt="demo"
           className="object-cover object-center"
         />

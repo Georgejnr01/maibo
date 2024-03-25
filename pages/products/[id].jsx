@@ -133,7 +133,7 @@ function Product({ product }) {
               Select your preferred color
             </div>
             <div className="grid grid-cols-2">
-              {product?.colors.map((i) => (
+              {product?.colors !== null && product?.colors.map((i) => (
                 <button
                   key={i._id}
                   onClick={() => {setColor({ color: i.color, image: i.image }); handleClickScroll(i.color)}}
