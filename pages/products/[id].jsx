@@ -66,7 +66,7 @@ function Product({ product }) {
                 product?.colors.map(
                   (i) =>
                     i.image !== null && (
-                      <div id={i.color} className="lg:w-[25vw] w-[50vw] min-h-[200px] bg-white lg:mb-12  mr-[3vw] lg:mr-0 lg:min-h-[350px] relative">
+                      <div key={i._id} id={i.color} className="lg:w-[25vw] w-[50vw] min-h-[200px] bg-white lg:mb-12  mr-[3vw] lg:mr-0 lg:min-h-[350px] relative">
                         <Image
                           fill
                           src={i.image}
@@ -80,7 +80,7 @@ function Product({ product }) {
                 product?.sizes.map(
                   (i) =>
                     i.image !== null && (
-                      <div id={i.size}  className="lg:w-[25vw] w-[50vw] min-h-[200px] bg-white lg:mb-12  mr-[3vw] lg:mr-0 lg:min-h-[350px] relative">
+                      <div key={i._id} id={i.size}  className="lg:w-[25vw] w-[50vw] min-h-[200px] bg-white lg:mb-12  mr-[3vw] lg:mr-0 lg:min-h-[350px] relative">
                         <Image
                           fill
                           src={i.image}
