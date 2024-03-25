@@ -62,7 +62,7 @@ function Product({ product }) {
                   />
                 </div>
               )}
-              {product?.colors &&
+              {product?.colors !== null &&
                 product?.colors.map(
                   (i) =>
                     i.image !== null && (
@@ -76,7 +76,7 @@ function Product({ product }) {
                       </div>
                     )
                 )}
-              {product?.sizes &&
+              {product?.sizes !== null &&
                 product?.sizes.map(
                   (i) =>
                     i.image !== null && (
@@ -126,7 +126,7 @@ function Product({ product }) {
           </button>
           <div
             className={`${
-              product?.colors ? "block" : "hidden"
+              product?.colors !== null ? "block" : "hidden"
             } mt-[15px] lg:mt-[30px]`}
           >
             <div className="font-bold text-xs lg:text-sm">
@@ -163,14 +163,14 @@ function Product({ product }) {
           </div>
           <div
             className={`${
-              product?.sizes ? "block" : "hidden"
+              product?.sizes !== null ? "block" : "hidden"
             } mt-[10px] lg:mt-[20px]`}
           >
             <div className="font-bold text-xs lg:text-sm">
               Select your preferred size
             </div>
             <div className="grid grid-cols-2">
-              {product?.sizes.map((i) => (
+              {product?.sizes !== null && product?.sizes.map((i) => (
                 <button
                   key={i._id}
                   onClick={() => {setSize({ size: i.size, image: i.image }); handleClickScroll(i.size)}}
