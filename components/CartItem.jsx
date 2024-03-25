@@ -9,14 +9,38 @@ function CartItem({ product }) {
   const dispatch = useDispatch();
   const { rate } = useSelector((state) => state.exchangeRate);
   return (
-    <div className="flex justify-between items-start transition-all duration-200">
-      <span className="flex h-32 md:h-36 items-start justify-between flex-col">
+    <div className="flex w-full pb-[10px] shadow-sm shadow-[#b3b3b3] justify-between items-center transition-all duration-200">
+      <span className="flex h-[146px] md:h-[156px] items-start justify-between flex-col">
         <span className="text-xs md:text-sm">
           {product?.new && (
-            <p className="md:text-xs mb-3">{product?.new ? "New" : ""}</p>
+            <p className="md:text-xs font-bold mb-1 lg:mb-2">{product?.new ? "New!" : ""}</p>
           )}
-          <h4 className="mb-1">{product?.name}</h4>
-          <p className="mt-3 text-xs md:text-sm">
+          <h4 className="mb-1 h-[20px] w-[180px] lg:w-[450px] 2xl:w-[600px] truncate">
+            {product?.name}
+          </h4>
+          <div className="lg:mt-2 lg:flex items-center">
+            <div className="flex items-center mr-[20px]">
+              <div className="font-bold mr-[5px]">Color:</div>
+              {product?.color.image !== null && (
+                <div className="w-[15px] h-[15px] relative bg-gray mr-[5px]">
+                  <Image src={product?.color.image} fill />
+                </div>
+              )}
+              {product?.color.color !== null && (
+                <div>{product?.color.color}</div>
+              )}
+            </div>
+            <div className=" mt-[5px] lg:mt-0 flex items-center">
+              <div className="font-bold mr-[5px]">Size:</div>
+              {product?.size.image !== null && (
+                <div className="w-[15px] h-[15px] relative bg-gray mr-[5px]">
+                  <Image src={product?.size.image} fill />
+                </div>
+              )}
+              {product?.size.size !== null && <div>{product?.size.size}</div>}
+            </div>
+          </div>
+          <p className="mt-1 lg:mt-2 text-xs md:text-sm">
             {product?.discountedPrice !== product?.originalPrice &&
               `${formatter.format(product?.discountedPrice * rate)} from `}{" "}
             <span
@@ -29,7 +53,7 @@ function CartItem({ product }) {
               {formatter.format(product?.originalPrice * rate)}
             </span>
           </p>
-          <span className="flex mt-3 justify-between items-center w-28">
+          <span className="flex mt-1 lg:mt-2 justify-between items-center w-28">
             <AiOutlineMinusSquare
               className="w-5 opacity-80 h-5 cursor-pointer"
               onClick={() => {
@@ -48,13 +72,13 @@ function CartItem({ product }) {
           </span>
         </span>
         <button
-          className="text-xs hover:underline"
+          className="text-xs mt-1 lg:mt-2 hover:underline"
           onClick={() => dispatch(remove({ _id: product._id }))}
         >
           Remove
         </button>
       </span>
-      <span className="relative block h-32 md:h-36 w-28 md:w-32">
+      <span className="relative block h-[146px] md:h-[156px] w-32 md:w-[132px]">
         <Image
           src={product?.productImage}
           alt="item"

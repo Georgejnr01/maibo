@@ -14,6 +14,8 @@ import { db } from "../firebase";
 
 export default function Home({ products, testimonials, categories }) {
   const [isPlayed, setPlayState] = useState(false);
+  const [activeCat, setActiveCat] = useState(categories[0].name);
+  const [catProds, setcatProds] = useState([]);
   const handlePlay = () => {
     setPlayState(true);
   };
@@ -21,13 +23,38 @@ export default function Home({ products, testimonials, categories }) {
     setPlayState(false);
   };
 
+  useEffect(() => {
+    const getProds = async () => {
+      const getCategorizedProducts = `*[_type == 'product' && $collection in category[]->name]{
+        _id,
+        name,
+        description,
+        new,
+        inStock,
+        discountedPrice,
+        originalPrice,
+        "productImage": productImage.asset->url,
+        "productImage2": productImage2.asset->url
+      }`;
+      const categorizedProducts = await sanityClient.fetch(
+        getCategorizedProducts,
+        {
+          collection: activeCat,
+        }
+      );
+      console.log(categorizedProducts);
+      setcatProds(categorizedProducts);
+    };
+    getProds();
+  }, [setcatProds, activeCat]);
+
   const seconds = 600;
   const timeStamp = new Date(Date.now() + seconds * 10000);
 
   return (
     <div>
       <Analytics />
-      <div className="relative h-96 md:h-[35rem] w-full mb-12">
+      <div className="relative h-56 md:h-[35rem] w-full mb-12">
         <Image
           fill
           src="/assets/banner.jpg"
@@ -35,22 +62,24 @@ export default function Home({ products, testimonials, categories }) {
           className="object-cover object-center"
         />
         <div className="absolute top-0 left-0 grid w-full h-full place-items-end bg-black/40">
-          <div className="relative mx-auto text-center text-white w-fit bottom-24 h-fit">
+          <div className="relative flex flex-col text-center items-center justify-center text-white w-full h-full">
             {/* <p className="mb-2 text-sm italic opacity-90">Making You New...</p> */}
-            <h1 className="max-w-sm md:max-w-3xl text-4xl md:leading-[1.35] font-['Playfair_Display','sans-serif'] font-semibold md:text-7xl md:font-bold">
+            <h1 className="max-w-[200px] md:max-w-3xl text-2xl md:leading-[1.35] font-['Playfair_Display','sans-serif'] font-semibold md:text-7xl md:font-bold">
               Shop Black Friday deals now
             </h1>
             <Link
               href="/shop"
-              className="relative block px-5 py-3 mx-auto mt-5 overflow-hidden font-medium transition-all duration-200 border-2 group hover:text-black w-fit"
+              className="relative block px-4 py-2 lg:px-5 lg:py-3 mx-auto mt-6 overflow-hidden font-medium transition-all duration-200 border-2 hover:border-transparent group hover:text-black w-fit"
             >
-              <span className="absolute left-0 block w-full h-full transition-all duration-200 bg-[#ff2a00] -bottom-12 group-hover:bottom-0 -z-0"></span>
-              <span className="relative z-10">Shop Now</span>
+              <span className="absolute left-0 block w-full h-full transition-all duration-200 bg-white -bottom-12 group-hover:bottom-0 -z-0"></span>
+              <span className="relative z-10 text-[12px] lg:text-[16px]">
+                Shop Now
+              </span>
             </Link>
           </div>
         </div>
       </div>
-      <div className="mb-16">
+      <div className="mb-[12px] lg:mb-16">
         <span className="block text-center mx-auto">
           {/* <h2 className=" mb-2 text-2xl font-medium md:text-4xl">
             Christmas up to 70% off{" "}
@@ -63,14 +92,14 @@ export default function Home({ products, testimonials, categories }) {
             people&apos;s lives in small but mighty ways.
           </p>--> */}
         </span>
-        <div className="grid grid-cols-2 gap-6 mt-12 md:gap-12 md:grid-cols-3 lg:grid-cols-4">
+        {/* <div className="grid grid-cols-2 mx-[5vw] gap-6 mt-12 md:gap-12 md:grid-cols-3 lg:grid-cols-4">
           {products.length > 0 &&
             products.slice(0, 4).map((product) => (
               <Card key={product._id} data={product} />
             ))}
-        </div>
+        </div> */}
       </div>
-      <div className="px-5 mb-16 md:px-16">
+      {/* <div className="px-5 mb-16 md:px-16">
         <h3 className="text-xl md:text-2xl">Back in stock!</h3>
         <div className="grid gap-3 mt-5 gird-cols-1 md:grid-cols-3">
           <div className="md:col-span-2">
@@ -93,9 +122,8 @@ export default function Home({ products, testimonials, categories }) {
             </Link>
           </div>
           <div className="grid w-full grid-cols-2 gap-3 md:grid-cols-1">
-            {products && <Card data={products[0]} />}
             <div>
-              <Link href="/collections/wrist-watch" className="block group">
+              <Link href="/collections/bag" className="block group">
                 <span className="relative block w-full h-64 overflow-hidden md:h-80">
                   <Image
                     src="/assets/bag.jpg"
@@ -115,7 +143,7 @@ export default function Home({ products, testimonials, categories }) {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
       {/* <div className="relative px-5 group md:px-16">
         <span
           className="relative block h-72 md:h-96 lg:h-[30rem]"
@@ -151,13 +179,13 @@ export default function Home({ products, testimonials, categories }) {
         )}
       </div> */}
       <div className="relative w-full min-h-[30vh] px-5 group md:px-16">
-        <div className="">Categories</div>
+        <div className="">In Stock</div>
         <div className="gridImages w-full h-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 mt-4">
-          {categories.map((cat) => (
+          {categories.slice(0, 6).map((cat) => (
             <Link
               href={`/collections/${cat.slug}`}
               key={cat._id}
-              className="prodct overflow-hidden relative flex items-center justify-center w-full h-[200px]"
+              className="product overflow-hidden relative flex items-center justify-center w-full h-[150px] lg:h-[200px]"
             >
               <div className="bg-black/60 w-full h-full absolute top-0 -z-20"></div>
               <Image
@@ -172,6 +200,36 @@ export default function Home({ products, testimonials, categories }) {
             </Link>
           ))}
         </div>
+      </div>
+      <div className="mt-12 lg:mt-16">
+        {/* Categories */}
+        <div className="w-full px-5 md:px-16 overflow-hidden shadow-sm shadow-[#e6e6e6] sticky z-40 bg-white top-[75px]">
+          <div className="overflow-scroll removeScroll flex text-nowrap">
+            {categories.map((i) => (
+              <button
+                onClick={() => setActiveCat(i.name)}
+                className={`mx-5 text-sm py-[15px] ${
+                  activeCat == i.name
+                    ? "font-bold border-b-2 border-black"
+                    : "font-normal border-none"
+                }`}
+              >
+                {i.name}
+              </button>
+            ))}
+          </div>
+        </div>
+        {catProds.length > 0 ? (
+          <div className="px-5 md:px-16">
+            <div className="grid grid-cols-2 gap-6 mt-6 lg:mt-12 md:gap-12 md:grid-cols-3 lg:grid-cols-4">
+              {catProds.map((product) => (
+                <Card key={product._id} data={product} />
+              ))}
+            </div>
+          </div>
+        ) : (
+          <div>No products under this category</div>
+        )}
       </div>
       {/* {testimonials && (
         <div className="grid grid-cols-2 gap-6 px-5 mb-16 md:px-16 md:gap-12 md:grid-cols-3">

@@ -29,6 +29,15 @@ input[type="radio"] {
   animation: global-loader-finished linear forwards 1s;
 }
 
+.removeScroll::-webkit-scrollbar {
+  display: none;
+}
+.removeScroll {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+
 @keyframes global-loader-finished {
   from {
     @apply h-1;

@@ -244,6 +244,8 @@ function Cart({ opened, handle }) {
       quantity: product.quantity,
       image: product.productImage,
       price: product.discountedPrice * rate || product.originalPrice * rate,
+      color: product.color.color,
+      size: product.size.size
     }));
 
     try {

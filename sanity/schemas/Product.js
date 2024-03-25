@@ -56,6 +56,34 @@ export default {
       },
     },
     {
+      name: "colors",
+      type: "array",
+      title: "Colors",
+      of: [
+        {
+          type: "object",
+          fields: [
+            { title: "Image", name: "image", type: "image" },
+            { title: "color", name: "color", type: "string" },
+          ],
+        },
+      ],
+    },
+    {
+      name: "sizes",
+      type: "array",
+      title: "Sizes",
+      of: [
+        {
+          type: "object",
+          fields: [
+            { title: "Image", name: "image", type: "image" },
+            { title: "size", name: "size", type: "string" },
+          ],
+        },
+      ],
+    },
+    {
       title: "Category",
       name: "category",
       type: "array",

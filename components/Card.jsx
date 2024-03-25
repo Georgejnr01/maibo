@@ -30,7 +30,7 @@ function Card({ data }) {
             </span>
           )}
         </span>
-        <span className="relative block w-full h-72 group bg-gray md:h-80 lg:h-96">
+        <span className="relative block w-full h-[152px] group bg-gray md:h-80 lg:h-[268px] ">
           {data?.productImage && (
             <Image
               fill
@@ -57,7 +57,7 @@ function Card({ data }) {
           )}
         </span>
         <span>
-          <h3 className="mt-4 text-xs transition-all h-[40px] overflow-hidden duration-150 md:text-sm">
+          <h3 className="mt-4 text-xs font-bold transition-all h-[32px] lg:h-[40px] overflow-hidden duration-150 md:text-sm">
             {data?.name}
           </h3>
           <p className="mt-3 text-xs md:text-sm">

@@ -49,11 +49,11 @@ function Checkout({ shippingFee }) {
       try {
         const docSnap = await getDoc(doc(db, "orders", order_id));
         docSnap.data().order.map((i) => {
-          getOrders += `Product Name:${i.name} Quantity Ordered:${
+          getOrders += `Product Name:${i.name} Color:${i.color} Size: ${i.size} Quantity Ordered:${
             i.quantity
           } Price:${i.price} Total Price:${i.price * i.quantity} Link:${
             i.link
-          } \n`;
+          } \n \n`;
         });
       } catch (error) {
         console.log(error.message);
@@ -61,7 +61,6 @@ function Checkout({ shippingFee }) {
       setOrders(getOrders);
     };
     getProdDetails(order_id);
-    console.log(orders);
   }, [order_id]);
 
   const config = {

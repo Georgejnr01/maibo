@@ -10,7 +10,7 @@ function Index({ categories }) {
         <Link
           href={`/collections/${cat.slug}`}
           key={cat._id}
-          className="product overflow-hidden relative flex items-center justify-center w-full h-[200px]"
+          className="product overflow-hidden relative flex items-center justify-center w-full h-[150px] lg:h-[200px]"
         >
           <div className="absolute top-0 w-full h-full bg-black/40 -z-20"></div>
           <Image
