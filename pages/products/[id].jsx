@@ -29,6 +29,18 @@ function Product({ product }) {
     setProductDetailsState(!isProductDetailsOpened);
   };
 
+  const CheckSelection = () => {
+    if(product?.colors !== null && color.color == ""){
+      toast.error("Please select a color");
+    } else if (product?.sizes !== null && size.size == "") {
+      console.log(false)
+      toast.error("Please select a size");
+    } else {
+      console.log(true)
+      addToBag();
+    }
+  }
+
   const addToBag = () => {
     setAdding(true);
     setTimeout(() => {
@@ -117,7 +129,7 @@ function Product({ product }) {
           </span>
           <button
             type="button"
-            onClick={addToBag}
+            onClick={CheckSelection}
             className="block w-full py-3 mt-12 text-xs text-white uppercase bg-black"
           >
             {adding ? (

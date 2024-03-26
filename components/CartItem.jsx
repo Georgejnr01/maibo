@@ -13,32 +13,38 @@ function CartItem({ product }) {
       <span className="flex h-[146px] md:h-[156px] items-start justify-between flex-col">
         <span className="text-xs md:text-sm">
           {product?.new && (
-            <p className="md:text-xs font-bold mb-1 lg:mb-2">{product?.new ? "New!" : ""}</p>
+            <p className="md:text-xs font-bold mb-1 lg:mb-2">
+              {product?.new ? "New!" : ""}
+            </p>
           )}
           <h4 className="mb-1 h-[20px] w-[180px] lg:w-[450px] 2xl:w-[600px] truncate">
             {product?.name}
           </h4>
           <div className="lg:mt-2 lg:flex items-center">
-            <div className="flex items-center mr-[20px]">
-              <div className="font-bold mr-[5px]">Color:</div>
-              {product?.color.image !== null && (
-                <div className="w-[15px] h-[15px] relative bg-gray mr-[5px]">
-                  <Image src={product?.color.image} fill  alt="colorImg"/>
-                </div>
-              )}
-              {product?.color.color !== null && (
-                <div>{product?.color.color}</div>
-              )}
-            </div>
-            <div className=" mt-[5px] lg:mt-0 flex items-center">
+            { product?.color !== null &&
+              <div className="flex items-center mr-[20px]">
+                <div className="font-bold mr-[5px]">Color:</div>
+                {product?.color.image !== null && (
+                  <div className="w-[15px] h-[15px] relative bg-gray mr-[5px]">
+                    <Image src={product?.color.image} fill alt="colorImg" />
+                  </div>
+                )}
+                {product?.color.color !== null && (
+                  <div>{product?.color.color}</div>
+                )}
+              </div>
+            }
+            {product?.size !== null &&
+              <div className=" mt-[5px] lg:mt-0 flex items-center">
               <div className="font-bold mr-[5px]">Size:</div>
               {product?.size.image !== null && (
                 <div className="w-[15px] h-[15px] relative bg-gray mr-[5px]">
-                  <Image src={product?.size.image} fill alt="sizeImg"/>
+                  <Image src={product?.size.image} fill alt="sizeImg" />
                 </div>
               )}
               {product?.size.size !== null && <div>{product?.size.size}</div>}
             </div>
+            }
           </div>
           <p className="mt-1 lg:mt-2 text-xs md:text-sm">
             {product?.discountedPrice !== product?.originalPrice &&

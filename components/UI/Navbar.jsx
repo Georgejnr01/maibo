@@ -315,7 +315,7 @@ function Cart({ opened, handle }) {
         >
           Close
         </button>
-        <div className="relative space-y-10 overflow-auto h-96 overflow-scroll-hidden">
+        <div className="relative space-y-10 overflow-auto h-[500px] lg:h-[450px] overflow-scroll-hidden">
           {products.map((p) => (
             <CartItem key={p._id} product={p} />
           ))}

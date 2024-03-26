@@ -11,16 +11,9 @@ export const CartSlice = createSlice({
   reducers: {
     add: (state, action) => {
       let cart = state.products.filter(
-        (item) => item._id !== action.payload._id
+        (item) => item._id
       );
-      const find = state.products.filter(
-        (item) => item._id === action.payload._id
-      );
-      if (find.length > 0) {
-        state.products = [...cart, ...find];
-      } else {
-        state.products = [...cart, action.payload];
-      }
+      state.products = [...cart, action.payload];
       localStorage.setItem("products", JSON.stringify([...state.products]));
     },
     addFromLocalStorage: (state, action) => {
