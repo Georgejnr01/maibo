@@ -30,7 +30,7 @@ function Card({ data }) {
             </span>
           )}
         </span>
-        <span className="relative block w-full h-[152px] group bg-gray md:h-80 lg:h-[268px] ">
+        <span className="relative block w-full h-[152px] group md:h-80 lg:h-[268px] ">
           {data?.productImage && (
             <Image
               fill

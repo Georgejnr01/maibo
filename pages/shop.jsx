@@ -132,7 +132,7 @@ function Shop({ products, categories }) {
               </ul>
             </div>
           )}
-          <div className="px-5">
+          {/* <div className="px-5">
             <span className="flex items-center justify-between mb-5 text-xs font-medium uppercase">
               <h4>Sort by</h4>
               {isSortByOpened ? (
@@ -205,7 +205,7 @@ function Shop({ products, categories }) {
                 </label>
               </li>
             </ul>
-          </div>
+          </div> */}
         </div>
         <span className="block w-full bottom-10">
           <button
@@ -220,7 +220,7 @@ function Shop({ products, categories }) {
           </button>
         </span>
       </div>
-      <div className="flex items-start justify-between px-5 mt-20 md:px-16">
+      <div className="flex items-start justify-between px-5 mt-2 lg:mt-20 md:px-16">
         <h3 className="text-sm font-medium">Luxury for All</h3>
         <p className="hidden max-w-sm text-xs text-center sm:block">
           Demo is a luxurious jewelry brand that is committed to delivering
@@ -235,7 +235,7 @@ function Shop({ products, categories }) {
           <span>Filters</span>
         </button>
       </div>
-      <div className="grid grid-cols-2 gap-6 mt-16 md:gap-12 md:grid-cols-3 lg:grid-cols-4">
+      <div className="grid grid-cols-2 gap-6 mt-8 lg:mt-16 md:gap-12 md:grid-cols-3 lg:grid-cols-4">
         {products?.length === 0 && data?.length === 0 ? (
           <p className="max-w-sm text-xs text-center sm:block">
             No product available

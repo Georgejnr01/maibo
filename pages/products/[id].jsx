@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { AiOutlineLoading } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { add } from "../../redux/slices/cart";
@@ -21,32 +21,45 @@ function Product({ product }) {
   const handleClickScroll = (value) => {
     const element = document.getElementById(value);
     if (element) {
-      element.scrollIntoView({behavior: 'smooth'});
+      element.scrollIntoView({ behavior: "smooth" });
     }
-  }
+  };
 
   const handleToggle = () => {
     setProductDetailsState(!isProductDetailsOpened);
   };
 
   const CheckSelection = () => {
-    if(product?.colors !== null && color.color == ""){
+    if (product?.colors !== null && color.color == "") {
       toast.error("Please select a color");
     } else if (product?.sizes !== null && size.size == "") {
-      console.log(false)
       toast.error("Please select a size");
     } else {
-      console.log(true)
       addToBag();
     }
-  }
+  };
 
   const addToBag = () => {
+    const prodDetails = {
+      _id: product._id+""+color.color+""+size.size,
+      name: product.name,
+      new: product.new,
+      color: color, 
+      size: size,
+      discountedPrice: product.discountedPrice,
+      originalPrice: product.originalPrice,
+      productImage: product.productImage
+    }
+    const prod = products.find(({_id}) => _id == product._id+""+color.color+""+size.size)
+    if(prod) {
+      toast.error("Product with the same specifications already exists in bag");
+    } else {
+      dispatch(add({ ...prodDetails, quantity: 1,}));
+      toast.success("Product has been added to Bag");
+    }
     setAdding(true);
     setTimeout(() => {
-      dispatch(add({ ...product, quantity: 1, color: color, size: size }));
       setAdding(false);
-      toast.success("Added to Cart");
     }, 1000);
   };
 
@@ -78,7 +91,11 @@ function Product({ product }) {
                 product?.colors.map(
                   (i) =>
                     i.image !== null && (
-                      <div key={i._id} id={i.color} className="lg:w-[25vw] w-[50vw] min-h-[200px] bg-white lg:mb-12  mr-[3vw] lg:mr-0 lg:min-h-[350px] relative">
+                      <div
+                        key={i._id}
+                        id={i.color}
+                        className="lg:w-[25vw] w-[50vw] min-h-[200px] bg-white lg:mb-12  mr-[3vw] lg:mr-0 lg:min-h-[350px] relative"
+                      >
                         <Image
                           fill
                           src={i.image}
@@ -92,7 +109,11 @@ function Product({ product }) {
                 product?.sizes.map(
                   (i) =>
                     i.image !== null && (
-                      <div key={i._id} id={i.size}  className="lg:w-[25vw] w-[50vw] min-h-[200px] bg-white lg:mb-12  mr-[3vw] lg:mr-0 lg:min-h-[350px] relative">
+                      <div
+                        key={i._id}
+                        id={i.size}
+                        className="lg:w-[25vw] w-[50vw] min-h-[200px] bg-white lg:mb-12  mr-[3vw] lg:mr-0 lg:min-h-[350px] relative"
+                      >
                         <Image
                           fill
                           src={i.image}
@@ -134,7 +155,9 @@ function Product({ product }) {
           >
             {adding ? (
               <AiOutlineLoading className="w-4 h-4 mx-auto animate-spin" />
-            ) : "Add to bag"}
+            ) : (
+              "Add to bag"
+            )}
           </button>
           <div
             className={`${
@@ -145,32 +168,36 @@ function Product({ product }) {
               Select your preferred color
             </div>
             <div className="grid grid-cols-2">
-              {product?.colors !== null && product?.colors.map((i) => (
-                <button
-                  key={i._id}
-                  onClick={() => {setColor({ color: i.color, image: i.image }); handleClickScroll(i.color)}}
-                  className={`mt-[5px] p-[5px] lg:p-[10px] border-[1px] ${
-                    color.color == i.color
-                      ? "border-black"
-                      : "border-transparent"
-                  } flex items-center justify-start`}
-                >
-                  {i.image != null && (
-                    <div className="lg:w-[35px] w-[25px] lg:h-[35px] h-[25px] relative mr-[15px] bg-gray">
-                      <Image fill src={i.image} alt="colorImg"/>
-                    </div>
-                  )}
-                  {i.color != null && (
-                    <div
-                      className={`text-xs ${
-                        color.color == i.color ? "font-bold" : "font-normal"
-                      }`}
-                    >
-                      {i.color}
-                    </div>
-                  )}
-                </button>
-              ))}
+              {product?.colors !== null &&
+                product?.colors.map((i) => (
+                  <button
+                    key={i._id}
+                    onClick={() => {
+                      setColor({ color: i.color, image: i.image });
+                      handleClickScroll(i.color);
+                    }}
+                    className={`mt-[5px] p-[5px] lg:p-[10px] border-[1px] ${
+                      color.color == i.color
+                        ? "border-black"
+                        : "border-transparent"
+                    } flex items-center justify-start`}
+                  >
+                    {i.image != null && (
+                      <div className="lg:w-[35px] w-[25px] lg:h-[35px] h-[25px] relative mr-[15px] bg-gray">
+                        <Image fill src={i.image} alt="colorImg" />
+                      </div>
+                    )}
+                    {i.color != null && (
+                      <div
+                        className={`text-xs ${
+                          color.color == i.color ? "font-bold" : "font-normal"
+                        }`}
+                      >
+                        {i.color}
+                      </div>
+                    )}
+                  </button>
+                ))}
             </div>
           </div>
           <div
@@ -182,30 +209,36 @@ function Product({ product }) {
               Select your preferred size
             </div>
             <div className="grid grid-cols-2">
-              {product?.sizes !== null && product?.sizes.map((i) => (
-                <button
-                  key={i._id}
-                  onClick={() => {setSize({ size: i.size, image: i.image }); handleClickScroll(i.size)}}
-                  className={`mt-[10px] p-[5px] lg:p-[10px] border-[1px] ${
-                    size.size == i.size ? "border-black" : "border-transparent"
-                  } flex items-center justify-start`}
-                >
-                  {i.image != null && (
-                    <div className="lg:w-[35px] w-[25px] lg:h-[35px] h-[25px] relative mr-[15px] bg-gray">
-                      <Image fill src={i.image} alt="sizeImg"/>
-                    </div>
-                  )}
-                  {i.size != null && (
-                    <div
-                      className={`text-xs ${
-                        size.size == i.size ? "font-bold" : "font-normal"
-                      }`}
-                    >
-                      {i.size}
-                    </div>
-                  )}
-                </button>
-              ))}
+              {product?.sizes !== null &&
+                product?.sizes.map((i) => (
+                  <button
+                    key={i._id}
+                    onClick={() => {
+                      setSize({ size: i.size, image: i.image });
+                      handleClickScroll(i.size);
+                    }}
+                    className={`mt-[10px] p-[5px] lg:p-[10px] border-[1px] ${
+                      size.size == i.size
+                        ? "border-black"
+                        : "border-transparent"
+                    } flex items-center justify-start`}
+                  >
+                    {i.image != null && (
+                      <div className="lg:w-[35px] w-[25px] lg:h-[35px] h-[25px] relative mr-[15px] bg-gray">
+                        <Image fill src={i.image} alt="sizeImg" />
+                      </div>
+                    )}
+                    {i.size != null && (
+                      <div
+                        className={`text-xs ${
+                          size.size == i.size ? "font-bold" : "font-normal"
+                        }`}
+                      >
+                        {i.size}
+                      </div>
+                    )}
+                  </button>
+                ))}
             </div>
           </div>
           <span className="block mt-10 space-y-5">
