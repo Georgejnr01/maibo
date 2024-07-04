@@ -397,7 +397,7 @@ function Checkout({ shippingFee }) {
         <div className="w-full mt-14 md:w-[50%]">
           <div className="mt-6 text-xs leading-relaxed opacity-90">
             By clicking Pay, you agree to purchase your item(s) from Maibo as
-            merchant of record for this transaction, on Maibo's Terms and
+            merchant of record for this transaction, on Maibo&apos;s Terms and
             Conditions and Privacy Policy.
           </div>
           <PaystackButton
