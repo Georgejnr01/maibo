@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { add } from "../../redux/slices/cart";
 import { sanityClient } from "../../sanity";
 import { formatter } from "../../utils/Formatter";
-import { doc } from "firebase/firestore";
 import { toast } from "react-toastify";
 
 function Product({ product }) {

@@ -1,4 +1,4 @@
-import { doc, updateDoc, getDoc } from "firebase/firestore";
+import { doc, updateDoc, getDoc, Timestamp } from "firebase/firestore";
 import { closePaymentModal, useFlutterwave } from "flutterwave-react-v3";
 import { useRouter } from "next/router";
 import React, { useEffect, useState, useRef } from "react";
@@ -9,6 +9,7 @@ import useGetUser from "../hooks/useGetUser";
 import { sanityClient } from "../sanity";
 import { formatter } from "../utils/Formatter";
 import emailjs from "@emailjs/browser";
+import { PaystackButton } from "react-paystack";
 
 function Checkout({ shippingFee }) {
   const router = useRouter();
@@ -49,11 +50,11 @@ function Checkout({ shippingFee }) {
       try {
         const docSnap = await getDoc(doc(db, "orders", order_id));
         docSnap.data().order.map((i) => {
-          getOrders += `Product Name:${i.name} Color:${i.color} Size: ${i.size} Quantity Ordered:${
-            i.quantity
-          } Price:${i.price} Total Price:${i.price * i.quantity} Link:${
-            i.link
-          } \n \n`;
+          getOrders += `Product Name:${i.name} Color:${i.color} Size: ${
+            i.size
+          } Quantity Ordered:${i.quantity} Price:${i.price} Total Price:${
+            i.price * i.quantity
+          } Link:${i.link} \n \n`;
         });
       } catch (error) {
         console.log(error.message);
@@ -64,24 +65,30 @@ function Checkout({ shippingFee }) {
   }, [order_id]);
 
   const config = {
-    public_key: process.env.NEXT_PUBLIC_FLUTTERWAVE_PUBLIC_KEY,
-    tx_ref: Date.now(),
-    amount: totalPrice,
-    currency: "NGN",
-    payment_options: "ussd, card, mobilemoney",
-    // redirect_url: "http://localhost:3000/",
-    customer: {
-      email: data?.email,
-      phone_number: data["phone number"] || "",
-      name: data?.firstname + " " + data?.lastname,
-    },
-    customizations: {
-      title: "Payment",
-      logo: "https://proclassics.co/assets/logo.png",
-    },
+    reference: new Date().getTime().toString(),
+    email: data?.email,
+    amount: Math.floor(totalPrice * 100),
+    publicKey: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY,
   };
 
-  const handleFlutterPayment = useFlutterwave(config);
+  const handleSuccess = () => {
+    updatePaymentStatusHandler(userData, "Paid").then(() => {
+      toast.success("Payment successful", {
+        toastId: "payment_success",
+      });
+      setSuccess(true);
+      router.push("/");
+    });
+  };
+
+  const componentProps = {
+    ...config,
+    text: paying ? "PAYING" : "PAY",
+    onSuccess: () => handleSuccess(),
+    onClose: () => {
+      setPaying(false);
+    },
+  };
 
   useEffect(() => {
     if (!isAuthenticated && !isVerifying) {
@@ -105,70 +112,9 @@ function Checkout({ shippingFee }) {
     });
   };
 
-  const handlePaymentByCash = (data) => {
-    handleFlutterPayment({
-      callback: (response) => {
-        updatePaymentStatusHandler(data, "Paid")
-          .then(() => {
-            if (response.status === "successful") {
-              toast.success("Payment successful", {
-                toastId: "payment_success",
-              });
-              setSuccess(true);
-              router.push("/");
-            }
-          })
-          .catch((err) => {
-            if (err) {
-              toast.error("Payment failed", {
-                toastId: "payment_error",
-              });
-              router.push("/");
-            }
-          });
-        closePaymentModal(); // this will close the modal programmatically
-      },
-      onClose: () => {
-        toast.error("Payment cancelled... Pay later on your dashboard");
-        setPaying(false);
-      },
-    });
-  };
-
-  const handlePaymentByCrypto = () => {
-    let messageForEmail = `I would like to make payment for my order - #${order_id} with crypto`;
-    let link = `mailto:demo@gmail.com?subject=Payment with Crypto&body=${messageForEmail}`;
-    updatePaymentStatusHandler(data, "Pending")
-      .then(() => {
-        toast.success("Opening Email App", {
-          toastId: "payment_success",
-        });
-        setSuccess(true);
-        let a = document.createElement("a");
-        a.href = link;
-        a.click();
-        router.push("/");
-      })
-      .catch((err) => {
-        if (err) {
-          toast.error("Failed to update", {
-            toastId: "payment_error",
-          });
-          router.push("/");
-        }
-      });
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const formData = new FormData(e.target);
-    const data = Object.fromEntries(formData);
     setPaying(true);
-
-    if (paymentMethod === "Cash") {
-      return handlePaymentByCash(data);
-    }
-    return handlePaymentByCrypto(data);
   };
 
   const sendSellerEmail = () => {
@@ -449,51 +395,15 @@ function Checkout({ shippingFee }) {
         </div>
 
         <div className="w-full mt-14 md:w-[50%]">
-          {/* <div className="mt-14 md:w-[50%] md:order-1">
-            <div className="pb-2 text-base font-extrabold border-b border-b-zinc-200">
-              PAYMENT
-            </div>
-            <div className="mt-4">
-              <div> Please choose your payment method</div>
-              <div className="flex mt-6 cards gap-x-3">
-                {["Cash", "Crypto"].map((m) => (
-                  <button
-                    type="button"
-                    key={m}
-                    className={`p-5 md:px-10 ${
-                      m === paymentMethod
-                        ? "bg-black text-white"
-                        : "bg-transparent border border-black text-black"
-                    }`}
-                    onClick={() => setPaymentMethod(m)}
-                  >
-                    {m}
-                  </button>
-                ))}
-              </div>
-              <div className="mt-6 text-sm leading-relaxed">
-                After clicking &quot;Pay&quot; with the payment option of choice
-                selected a pop-up will appear. Review your payment and shipping
-                details to complete your purchase. You will be redirected to the
-                &quot;ProClassics&quot; Order Confirmation page afterwards.
-              </div>
-            </div>
-          </div> */}
           <div className="mt-6 text-xs leading-relaxed opacity-90">
-            By clicking Pay, you agree to purchase your item(s) from ProClassics
-            as merchant of record for this transaction, on ProClassics&apos;s
-            Terms and Conditions and Privacy Policy.
+            By clicking Pay, you agree to purchase your item(s) from Maibo as
+            merchant of record for this transaction, on Maibo's Terms and
+            Conditions and Privacy Policy.
           </div>
-          <button
-            type="submit"
-            disabled={gettingUser || paying || successful}
-            style={{
-              opacity: gettingUser || paying || successful ? "0.5" : "1",
-            }}
-            className="bg-[#212121] text-white py-4 w-full mt-10 text-center text-sm"
-          >
-            {paying ? "PAYING" : "PAY"}
-          </button>
+          <PaystackButton
+            {...componentProps}
+            className={`bg-[#212121] text-white py-4 w-full mt-10 text-center text-sm`}
+          />
         </div>
       </form>
     </div>

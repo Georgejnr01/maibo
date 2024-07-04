@@ -232,15 +232,16 @@ function Cart({ opened, handle }) {
 
   const handleCheckout = async () => {
     if (!isAuthenticated) {
-      toast.error("You need to logged in before checkout");
+      toast.error("You need to be logged in before checkout");
       handle();
       return router.push("/auth/login");
     }
     setLoading(true);
+    
     const OrderedProducts = products.map((product) => ({
       id: product._id,
       name: product.name,
-      link: product.productLink,
+      link: product.productLink || null,
       quantity: product.quantity,
       image: product.productImage,
       price: product.discountedPrice * rate || product.originalPrice * rate,
@@ -253,7 +254,7 @@ function Cart({ opened, handle }) {
         order: [...OrderedProducts],
         user: user.uid,
         totalPrice,
-        date_created: Timestamp.now(),
+        date_created: new Date().toLocaleString("default", {dateStyle:"full"}),
         payment_status: "Pending",
         fulfillment_status: "Pending",
         checkoutDetails: {},

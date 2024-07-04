@@ -23,6 +23,7 @@
     "react-country-region-selector": "^3.6.1",
     "react-dom": "18.2.0",
     "react-icons": "^4.7.1",
+    "react-paystack": "^5.0.0",
     "react-redux": "^8.0.5",
     "react-select": "^5.7.0",
     "react-timer-hook": "^3.0.7",
