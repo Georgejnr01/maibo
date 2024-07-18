@@ -211,7 +211,7 @@ function Order({ order }) {
 export default Order;
 
 export const getStaticPaths = async () => {
-  const orders = [];
+  let orders = [];
   const q = collection(db, "orders");
   const querySnapshot = await getDocs(q);
   querySnapshot.forEach((doc) => {
