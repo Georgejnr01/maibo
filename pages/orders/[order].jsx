@@ -217,16 +217,11 @@ export const getStaticPaths = async () => {
   querySnapshot.forEach((doc) => {
     orders.push({ id: doc.id, order: doc.data() });
   });
-  let paths;
-  if (orders) {
-    paths = orders.map((d) => ({
-      params: {
-        order: d.id,
-      },
-    }));
-  } else {
-    toast.error("failed to fetch orders");
-  }
+  const paths = orders.map((d) => ({
+    params: {
+      order: d.id,
+    },
+  }));
 
   return {
     paths,
