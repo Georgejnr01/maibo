@@ -18,7 +18,8 @@ function Checkout({ shippingFee }) {
     (state) => state.auth
   );
   const [paymentMethod, setPaymentMethod] = useState("Cash");
-  const { totalPrice } = useSelector((state) => state.cart);
+  const [serviceCharge, setServiceCharge] = useState(0);
+  const [totalPrice, setTotalPrice] = useState(0);
   const { data, isLoading: gettingUser } = useGetUser(user.uid);
   const [paying, setPaying] = useState(false);
   const [successful, setSuccess] = useState(false);
@@ -49,6 +50,8 @@ function Checkout({ shippingFee }) {
     const getProdDetails = async (order_id) => {
       try {
         const docSnap = await getDoc(doc(db, "orders", order_id));
+        setServiceCharge(docSnap.data().serviceCharge);
+        setTotalPrice(docSnap.data().totalPrice);
         docSnap.data().order.map((i) => {
           getOrders += `Product Name:${i.name} Color:${i.color} Size: ${
             i.size
@@ -67,7 +70,7 @@ function Checkout({ shippingFee }) {
   const config = {
     reference: new Date().getTime().toString(),
     email: data?.email,
-    amount: Math.floor(totalPrice * 100),
+    amount: Math.floor((totalPrice + serviceCharge) * 100),
     publicKey: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY,
   };
 
@@ -373,22 +376,17 @@ function Checkout({ shippingFee }) {
                 </div>
               </div>
               <div className="flex justify-between mt-4 mb-8 total">
-                <div className="font-medium">SHIPPING</div>
+                <div className="font-medium">SERVICE CHARGE</div>
                 <div className="font-medium text-[#3A3A3A]">
-                  {formatter.format(shippingFee?.fee || 0)}
+                  {formatter.format(serviceCharge || 0)}
                 </div>
               </div>
 
               <div className="flex justify-between py-8 text-lg border-t sumtotal border-t-zinc-200">
                 <div className="font-extrabold ">TOTAL</div>
                 <div className="font-extrabold ">
-                  {formatter.format(totalPrice + 200)}
+                  {formatter.format(totalPrice + serviceCharge)}
                 </div>
-              </div>
-
-              <div className="text max-w-xs text-[#3A3A3A] text-sm leading-relaxed">
-                The total amount you pay includes all applicable customs duties
-                & taxes. We guarantee no additional charges on delivery.
               </div>
             </div>
           </div>

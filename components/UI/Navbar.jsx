@@ -17,6 +17,7 @@ import {
   addFromLocalStorage,
   addTotalPrice,
   clear,
+  addServiceCharge,
 } from "../../redux/slices/cart";
 import { formatter } from "../../utils/Formatter";
 import CartItem from "../CartItem";
@@ -227,6 +228,7 @@ function Cart({ opened, handle }) {
   const { rate } = useSelector((state) => state.exchangeRate);
   const dispatch = useDispatch();
   const [totalPrice, setTotalPrice] = useState(0);
+  const [serviceCharge, setServiceCharge] = useState(0);
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
@@ -237,7 +239,7 @@ function Cart({ opened, handle }) {
       return router.push("/auth/login");
     }
     setLoading(true);
-    
+
     const OrderedProducts = products.map((product) => ({
       id: product._id,
       name: product.name,
@@ -246,7 +248,7 @@ function Cart({ opened, handle }) {
       image: product.productImage,
       price: product.discountedPrice * rate || product.originalPrice * rate,
       color: product.color.color,
-      size: product.size.size
+      size: product.size.size,
     }));
 
     try {
@@ -254,7 +256,10 @@ function Cart({ opened, handle }) {
         order: [...OrderedProducts],
         user: user.uid,
         totalPrice,
-        date_created: new Date().toLocaleString("default", {dateStyle:"full"}),
+        serviceCharge,
+        date_created: new Date().toLocaleString("default", {
+          dateStyle: "full",
+        }),
         payment_status: "Pending",
         fulfillment_status: "Pending",
         checkoutDetails: {},
@@ -283,9 +288,14 @@ function Cart({ opened, handle }) {
           ? item?.discountedPrice * rate * item.quantity
           : item?.originalPrice * rate * item.quantity;
       });
-
       setTotalPrice(price);
       dispatch(addTotalPrice(price));
+      let service = 0;
+      products.forEach((item) => {
+        service += 80 * item.quantity;
+      });
+      setServiceCharge(service);
+      dispatch(addServiceCharge(service));
     } else {
       setTotalPrice(0);
       let cart = localStorage.getItem("products");

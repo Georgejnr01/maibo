@@ -106,12 +106,16 @@ function Order({ order }) {
                 <span>{formatter.format(data?.data?.totalPrice)}</span>
               </p>
               <p className="flex items-center justify-between px-4 py-2 text-sm">
-                <span>Shipping (standard)</span>
-                <span>{formatter.format(50)}</span>
+                <span>Service Charge</span>
+                <span>{formatter.format(data?.data?.serviceCharge)}</span>
               </p>
               <p className="flex items-center justify-between px-4 py-2 text-sm font-medium md:text-lg">
                 <span>Total</span>
-                <span>{formatter.format(data?.data?.totalPrice + 50)}</span>
+                <span>
+                  {formatter.format(
+                    data?.data?.totalPrice + data?.data?.serviceCharge
+                  )}
+                </span>
               </p>
             </div>
           </div>
