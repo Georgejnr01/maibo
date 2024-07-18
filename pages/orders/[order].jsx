@@ -217,7 +217,7 @@ export const getStaticPaths = async () => {
   querySnapshot.forEach((doc) => {
     orders.push({ id: doc.id, order: doc.data() });
   });
-  const paths = orders.map((d) => ({
+  const paths = orders?.map((d) => ({
     params: {
       order: d.id,
     },
