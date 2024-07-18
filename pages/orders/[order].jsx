@@ -211,17 +211,22 @@ function Order({ order }) {
 export default Order;
 
 export const getStaticPaths = async () => {
-  let orders = [];
+  const orders = [];
   const q = collection(db, "orders");
   const querySnapshot = await getDocs(q);
   querySnapshot.forEach((doc) => {
     orders.push({ id: doc.id, order: doc.data() });
   });
-  const paths = orders?.map((d) => ({
-    params: {
-      order: d.id,
-    },
-  }));
+  let paths;
+  if (orders) {
+    paths = orders.map((d) => ({
+      params: {
+        order: d.id,
+      },
+    }));
+  } else {
+    toast.error("failed to fetch orders");
+  }
 
   return {
     paths,
