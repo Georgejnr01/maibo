@@ -15,7 +15,7 @@ const Row = ({ id, data }) => {
         </Link>
       </td>
       <td className="h-10 px-2 align-middle">
-        {new Date(data?.date_created?.seconds * 1000).toDateString()}
+        {data?.date_created}
       </td>
       <td className="h-10 px-2 align-middle">{data.payment_status}</td>
       <td className="h-10 px-2 align-middle">{data.fulfillment_status}</td>

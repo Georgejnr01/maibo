@@ -21,20 +21,20 @@ function CartItem({ product }) {
             {product?.name}
           </h4>
           <div className="lg:mt-2 lg:flex items-center">
-            { product?.color !== null &&
+            { product?.color.color !== "" && product?.color.image !== "" &&
               <div className="flex items-center mr-[20px]">
                 <div className="font-bold mr-[5px]">Color:</div>
-                {product?.color.image !== null && (
+                {product?.color.image !== "" && (
                   <div className="w-[15px] h-[15px] relative bg-gray mr-[5px]">
                     <Image src={product?.color.image} fill alt="colorImg" />
                   </div>
                 )}
-                {product?.color.color !== null && (
+                {product?.color.color !== "" && (
                   <div>{product?.color.color}</div>
                 )}
               </div>
             }
-            {product?.size !== null &&
+            {product?.size.image !== "" && product?.size.size !== "" &&
               <div className=" mt-[5px] lg:mt-0 flex items-center">
               <div className="font-bold mr-[5px]">Size:</div>
               {product?.size.image !== null && (

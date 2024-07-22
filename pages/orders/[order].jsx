@@ -93,10 +93,7 @@ function Order({ order }) {
             Fulfillment Status: {data?.data?.fulfillment_status}
           </p>
           <p className="text-xs lg:text-sm">
-            Placed on{" "}
-            {new Date(
-              data?.data?.date_created?.seconds * 1000
-            ).toLocaleString()}
+            Placed on {data?.data?.date_created}
           </p>
           <div className="mt-5">
             <Table data={data} />

@@ -47,7 +47,8 @@ function Product({ product }) {
       size: size,
       discountedPrice: product.discountedPrice,
       originalPrice: product.originalPrice,
-      productImage: product.productImage
+      productImage: product.productImage,
+      productLink: product.productLink,
     }
     const prod = products.find(({_id}) => _id == product._id+""+color.color+""+size.size)
     if(prod) {
