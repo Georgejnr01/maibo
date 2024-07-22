@@ -21,7 +21,7 @@ export default function Page() {
   return (
     <div className="p-[5vw]">
       <div className="mb-[10px] font-bold">ORDERS</div>
-      <div className="flex flex-col gap-[10px]">{orders && orders.map((i) => <OrderItem i={i} />)}</div>
+      <div className="flex flex-col gap-[10px]">{orders && orders.map((i, index) => <OrderItem key={index} i={i} />)}</div>
     </div>
   );
 }
@@ -77,7 +77,7 @@ function OrderItem({ i }) {
         </div>
         <div className="mt-[10px] font-bold">Products</div>
         {i?.order?.order?.map((i, index) => (
-          <div className="flex gap-[5px]">
+          <div key={index} className="flex gap-[5px]">
             <b>{index + 1}.</b>
             <div className="w-full">
               <div className="break-words">Link: {i.link}</div>
