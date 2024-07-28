@@ -33,6 +33,7 @@ function Checkout({ shippingFee }) {
     city: "",
     zipcode: "",
     phone: "",
+    shippingMethod: "",
   });
   const form = useRef();
 
@@ -361,6 +362,27 @@ function Checkout({ shippingFee }) {
                   required
                   className="p-2 text-sm bg-transparent border-b outline-none shadow-b-xl border-b-zinc-200"
                 />
+              </div>
+              <div className="flex flex-col input-group gap-y-4">
+                <label
+                  className="text-[0.92rem] font-medium opacity-80"
+                >
+                  Shipping Method *
+                </label>
+                <select
+                  onChange={(e) =>
+                    setUserData((userData) => ({
+                      ...userData,
+                      shippingMethod: e.target.value,
+                    }))
+                  }
+                  value={userData.shippingMethod}
+                  className="p-2 text-sm bg-transparent border-b outline-none shadow-b-xl border-b-zinc-200"
+                >
+                  <option value={""}></option>
+                  <option value={"Air"}>Air</option>
+                  <option value={"Sea"}>Sea</option>
+                </select>
               </div>
             </div>
           </div>

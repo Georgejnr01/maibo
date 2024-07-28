@@ -21,7 +21,16 @@ export default function Page() {
   return (
     <div className="p-[5vw]">
       <div className="mb-[10px] font-bold">ORDERS</div>
-      <div className="flex flex-col gap-[10px]">{orders && orders.map((i, index) => <OrderItem key={index} i={i} />)}</div>
+      <div className="flex flex-col gap-[10px]">
+        {orders &&
+          orders
+            .sort(
+              (a, b) =>
+                new Date(a?.order?.date_created) -
+                new Date(b?.order?.date_created)
+            )
+            .map((i, index) => <OrderItem key={index} i={i} />)}
+      </div>
     </div>
   );
 }
@@ -34,47 +43,26 @@ function OrderItem({ i }) {
         <div>{i.id}</div>
         <div>{i.order.payment_status}</div>
         <div
-          className="text-[10px]"
+          className="text-[10px] cursor-pointer"
           onClick={() => setShowDetails(!showDetails)}
         >
           {" "}
           {showDetails ? "Hide Details" : "Show Details"}{" "}
         </div>
       </div>
-      <div className={`${showDetails ? "block":"hidden"} mt-[10px]`}>
-        <div>
-          Firstname: {i?.order?.checkoutDetails?.firstName}
-        </div>
-        <div>
-          Lastname: {i?.order?.checkoutDetails?.lastName}
-        </div>
-        <div>
-          Address1: {i?.order?.checkoutDetails?.address1}
-        </div>
-        <div>
-          Address2: {i?.order?.checkoutDetails?.address2}
-        </div>
-        <div>
-          City: {i?.order?.checkoutDetails?.city}
-        </div>
-        <div>
-          Email: {i?.order?.checkoutDetails?.email}
-        </div>
-        <div>
-          Phone: {i?.order?.checkoutDetails?.phone}
-        </div>
-        <div>
-          Zipcode: {i?.order?.checkoutDetails?.zipcode}
-        </div>
-        <div>
-          Date: {i?.order?.date_created}
-        </div>
-        <div>
-          Service Charge: &#8358;{i?.order?.serviceCharge}
-        </div>
-        <div>
-          Total Price: &#8358;{i?.order?.totalPrice}
-        </div>
+      <div className={`${showDetails ? "block" : "hidden"} mt-[10px]`}>
+        <div>Firstname: {i?.order?.checkoutDetails?.firstName}</div>
+        <div>Lastname: {i?.order?.checkoutDetails?.lastName}</div>
+        <div>Address1: {i?.order?.checkoutDetails?.address1}</div>
+        <div>Address2: {i?.order?.checkoutDetails?.address2}</div>
+        <div>City: {i?.order?.checkoutDetails?.city}</div>
+        <div>Email: {i?.order?.checkoutDetails?.email}</div>
+        <div>Phone: {i?.order?.checkoutDetails?.phone}</div>
+        <div>Zipcode: {i?.order?.checkoutDetails?.zipcode}</div>
+        <div>Date: {i?.order?.date_created}</div>
+        <div>Service Charge: &#8358;{i?.order?.serviceCharge}</div>
+        <div>Total Price: &#8358;{i?.order?.totalPrice}</div>
+        <div>Shipping Method: {i?.order?.checkoutDetails?.shippingMethod}</div>
         <div className="mt-[10px] font-bold">Products</div>
         {i?.order?.order?.map((i, index) => (
           <div key={index} className="flex gap-[5px]">
@@ -90,7 +78,6 @@ function OrderItem({ i }) {
           </div>
         ))}
       </div>
-
     </div>
   );
 }

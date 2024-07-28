@@ -64,8 +64,11 @@ export default function Home({ products, testimonials, categories }) {
         <div className="absolute top-0 left-0 grid w-full h-full place-items-end bg-black/40">
           <div className="relative flex flex-col text-center items-center justify-center text-white w-full h-full">
             {/* <p className="mb-2 text-sm italic opacity-90">Making You New...</p> */}
-            <h1 className="max-w-[200px] md:max-w-3xl text-2xl md:leading-[1.35] font-['Playfair_Display','sans-serif'] font-semibold md:text-7xl md:font-bold">
-              Shop Black Friday deals now
+            <h1 className="max-w-[200px] md:max-w-3xl text-xl md:leading-[1.35] font-['Playfair_Display','sans-serif'] font-semibold md:text-6xl md:font-bold">
+              立即购买超值优惠
+            </h1>
+            <h1 className="max-w-[200px] md:max-w-3xl mt-[10px] text-xl md:leading-[1.35] font-['Playfair_Display','sans-serif'] font-semibold md:text-6xl md:font-bold">
+              Shop amazing deals now
             </h1>
             <Link
               href="/shop"

@@ -126,7 +126,7 @@ function Product({ product }) {
             </div>
           </div>
         </div>
-        <div className="p-10 lg:h-screen lg:sticky top-20 md:px-16 lg:px-32 md:py-16">
+        <div className="p-10 lg:sticky top-20 md:px-16 lg:px-32 md:py-16">
           <span className="text-xs md:text-sm">
             {product?.new && (
               <p className="mb-3 md:text-xs">{product?.new ? "New" : ""}</p>
@@ -189,7 +189,7 @@ function Product({ product }) {
                     )}
                     {i.color != null && (
                       <div
-                        className={`text-xs ${
+                        className={`text-xs text-start ${
                           color.color == i.color ? "font-bold" : "font-normal"
                         }`}
                       >
