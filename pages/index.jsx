@@ -3,14 +3,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { BsArrowRight, BsFillPlayCircleFill } from "react-icons/bs";
-import { toast } from "react-toastify";
 import Card from "../components/Card";
 import { sanityClient } from "../sanity";
-import MyTimer from "../components/Timer";
-import LiveTimer from "../components/LiveTimer";
-import { doc, getDoc } from "firebase/firestore";
-import { db } from "../firebase";
 
 export default function Home({ products, testimonials, categories }) {
   const [isPlayed, setPlayState] = useState(false);
