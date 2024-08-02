@@ -26,8 +26,8 @@ export default function Page() {
           orders
             .sort(
               (a, b) =>
-                new Date(a?.order?.date_created) -
-                new Date(b?.order?.date_created)
+                new Date(b?.order?.date_created) -
+                new Date(a?.order?.date_created)
             )
             .map((i, index) => <OrderItem key={index} i={i} />)}
       </div>
