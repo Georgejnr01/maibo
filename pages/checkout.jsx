@@ -40,7 +40,7 @@ function Checkout({ shippingFee }) {
   useEffect(() => {
     if (totalPrice === 0 && isAuthenticated && !router?.query?.order_id) {
       router.push("/");
-      toast.error("No valid order");
+      toast.error("No valid order(s)");
     } else if (isAuthenticated) {
       setOrderId(router?.query?.order_id || "");
     }
