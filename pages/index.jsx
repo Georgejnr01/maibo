@@ -31,7 +31,7 @@ export default function Home({ categories }) {
       setcatProds(categorizedProducts);
     };
     getProds();
-  }, [setcatProds, activeCat]);
+  }, [activeCat]);
 
   const seconds = 600;
   const timeStamp = new Date(Date.now() + seconds * 10000);
@@ -74,9 +74,9 @@ export default function Home({ categories }) {
       <div className="relative w-full min-h-[30vh] px-5 group md:px-16">
         <div className="">In Stock</div>
         <div className="gridImages w-full h-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 mt-4">
-          {categories.slice(0, 6).map((cat) => (
+          {categories.slice(0, 4).map((cat) => (
             <Link
-              href={`/collections/${cat.slug}`}
+              href={`/collections/${cat.name.replace(/ /g, "_")}`}
               key={cat._id}
               className="product overflow-hidden relative flex items-center justify-center w-full h-[150px] lg:h-[200px]"
             >

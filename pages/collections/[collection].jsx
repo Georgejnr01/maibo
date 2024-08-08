@@ -39,7 +39,7 @@ export const getStaticPaths = async () => {
 };
 
 export const getStaticProps = async ({ params }) => {
-  const productsQuery = `*[_type == 'product' && $collection in category[]->slug.current]{
+  const productsQuery = `*[_type == 'product' && $collection in category[]->name]{
       _id,
       name,
       description,
@@ -52,7 +52,7 @@ export const getStaticProps = async ({ params }) => {
     }`;
 
   const products = await sanityClient.fetch(productsQuery, {
-    collection: params.collection,
+    collection: params.collection.replace(/_/g, " "),
   });
 
   if (!products) {
