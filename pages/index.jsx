@@ -76,7 +76,7 @@ export default function Home({ categories }) {
         <div className="gridImages w-full h-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 mt-4">
           {categories.slice(0, 4).map((cat) => (
             <Link
-              href={`/collections/${cat.name.replace(/ /g, "_")}`}
+              href={ cat.name && `/collections/${cat.name?.replace(/ /g, "_")}`}
               key={cat._id}
               className="product overflow-hidden relative flex items-center justify-center w-full h-[150px] lg:h-[200px]"
             >
