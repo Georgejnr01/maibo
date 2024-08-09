@@ -8,7 +8,7 @@ function Index({ categories }) {
     <div className="grid grid-cols-2 gap-6 px-5 mt-16 md:px-16 md:gap-12 md:grid-cols-3 lg:grid-cols-4">
       {categories?.map((cat) => (
         <Link
-          href={`/collections/${cat.slug}`}
+          href={cat.name && `/collections/${cat.name?.replace(/ /g, "_")}`}
           key={cat._id}
           className="product overflow-hidden relative flex items-center justify-center w-full h-[150px] lg:h-[200px]"
         >
