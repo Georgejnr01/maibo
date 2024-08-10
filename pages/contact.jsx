@@ -1,8 +1,9 @@
 import { useFormspark } from "@formspark/use-formspark";
 import Image from "next/image";
 import React, { useState } from "react";
+import Link from "next/link";
 
-const FORMSPARK_FORM_ID = "4g4Nd99N";
+const FORMSPARK_FORM_ID = "VCwW9GLml";
 
 function Contact() {
   const [submit, submitting] = useFormspark({
@@ -26,9 +27,13 @@ function Contact() {
       <div className="mt-12 md:max-w-3xl mx-auto ">
         <h1 className="text-4xl md:text-5xl opacity-95">Contact Us</h1>
         <div className="flex flex-col gap-y-4 md:gap-y-6 my-10 md:my-14 opacity-80 font-medium">
-          <span>Call: +971 52 465 0058 | +234 909 8149447</span>
-          <span>Email: support@demo.co | support@maibo.com</span>
-          <span>Address: CA, Johnson avenue</span>
+          <span>
+            Call: <Link href={"tel:+2349042850276"}>+234 904 285 0276</Link>
+          </span>
+          <span>
+            Email:{" "}
+            <Link href={"mailto:maibomart@gmail.com"}>maibomart@gmail.com</Link>
+          </span>
         </div>
         {alert && (
           <div className="text-3xl bg-gray text-[#000] p-5">

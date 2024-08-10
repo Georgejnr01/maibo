@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { db } from "../../firebase";
 import { collection, getDocs } from "firebase/firestore";
+import Link from "next/link";
 
 export default function Page() {
   const [orders, setOrders] = useState();
@@ -68,7 +69,9 @@ function OrderItem({ i }) {
           <div key={index} className="flex gap-[5px]">
             <b>{index + 1}.</b>
             <div className="w-full">
-              <div className="break-words">Link: {i.link}</div>
+              <div className="break-words">
+                Link: <Link href={i.link} className="text-[#0000EE] hover:underline">{i.link}</Link>
+              </div>
               <div className="break-words">Name: {i.name}</div>
               <div>Price: {i.price}</div>
               <div>Quantity: {i.quantity}</div>

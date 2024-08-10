@@ -1,6 +1,10 @@
 import Link from "next/link";
 import React from "react";
-import { AiFillInstagram, AiOutlineTwitter } from "react-icons/ai";
+import {
+  AiFillInstagram,
+  AiOutlineTwitter,
+  AiOutlineWhatsApp,
+} from "react-icons/ai";
 import { BsArrowRight, BsPaypal, BsYoutube } from "react-icons/bs";
 import { FaCcDiscover } from "react-icons/fa";
 import { GrAmex } from "react-icons/gr";
@@ -24,24 +28,10 @@ function Footer() {
                 Collections
               </Link>
             </li>
-            {["clothes", "bags"].map((d) => (
-              <li key={d} className="mb-3 capitalize last:mb-0">
-                <Link
-                  href={`/collections/${d}`}
-                  className="text-sm transition-all duration-150 hover:underline"
-                >
-                  {d}
-                </Link>
-              </li>
-            ))}
           </ul>
           <ul className="mt-5 md:mt-0">
             <h4 className="mb-3 text-base font-medium md:text-lg">Info</h4>
             {[
-              {
-                title: "About",
-                link: "/about",
-              },
               {
                 title: "contact us",
                 link: "/contact",
@@ -88,20 +78,12 @@ function Footer() {
           <span className="flex items-center space-x-4">
             {[
               {
-                icon: <AiOutlineTwitter className="w-5 h-5 text-black" />,
-                link: "https://twitter.com/pro_classics",
+                icon: <AiOutlineWhatsApp className="w-5 h-5 text-black" />,
+                link: "https://wa.me/2349042850276",
               },
               {
                 icon: <AiFillInstagram className="w-5 h-5 text-black" />,
-                link: "https://www.instagram.com/demo/",
-              },
-              // {
-              //   icon: <TbBrandTiktok className="w-5 h-5 text-black" />,
-              //   link: "/tiktok",
-              // },
-              {
-                icon: <BsYoutube className="w-5 h-5 text-black" />,
-                link: "https://www.youtube.com/@demo",
+                link: "https://www.instagram.com/maibostore?igsh=MXhuaW56OHFoMTNxYQ==",
               },
             ].map((d) => (
               <Link href={d.link} key={d.link} className="">
