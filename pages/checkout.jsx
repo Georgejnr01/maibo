@@ -11,7 +11,7 @@ import { formatter } from "../utils/Formatter";
 import emailjs from "@emailjs/browser";
 import { PaystackButton } from "react-paystack";
 
-function Checkout({ shippingFee }) {
+function Checkout() {
   const router = useRouter();
   const [order_id, setOrderId] = useState("");
   const { isAuthenticated, isVerifying, user } = useSelector(
@@ -38,13 +38,13 @@ function Checkout({ shippingFee }) {
   const form = useRef();
 
   useEffect(() => {
-    if (totalPrice === 0 && isAuthenticated && !router?.query?.order_id) {
+    if (!router?.query?.order_id) {
       router.push("/");
       toast.error("No valid order(s)");
     } else if (isAuthenticated) {
       setOrderId(router?.query?.order_id || "");
     }
-  }, [totalPrice, router, isAuthenticated]);
+  }, []);
 
   useEffect(() => {
     let getOrders = "";
