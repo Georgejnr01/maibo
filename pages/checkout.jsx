@@ -38,35 +38,33 @@ function Checkout() {
   const form = useRef();
 
   useEffect(() => {
-    if (!router?.query?.order_id) {
-      router.push("/");
-      toast.error("No valid order(s)");
-    } else if (isAuthenticated) {
-      setOrderId(router?.query?.order_id || "");
+    if (router.query.order_id) {
+      let getOrders = "";
+      const getProdDetails = async (order_id) => {
+        try {
+          const docSnap = await getDoc(doc(db, "orders", order_id));
+          setServiceCharge(docSnap.data().serviceCharge);
+          setTotalPrice(docSnap.data().totalPrice);
+          docSnap.data().order.map((i) => {
+            getOrders += `Product Name:${i.name} Color:${i.color} Size: ${
+              i.size
+            } Quantity Ordered:${i.quantity} Price:${i.price} Total Price:${
+              i.price * i.quantity
+            } Link:${i.link} \n \n`;
+          });
+        } catch (error) {
+          console.log(error.message);
+        }
+        setOrders(getOrders);
+      };
+      setTimeout(() => {
+        if(!router.query.order_id) {
+          toast.error("No Valid Order");
+        }
+      }, 2000);
+      getProdDetails(router?.query?.order_id);
     }
-  }, []);
-
-  useEffect(() => {
-    let getOrders = "";
-    const getProdDetails = async (order_id) => {
-      try {
-        const docSnap = await getDoc(doc(db, "orders", order_id));
-        setServiceCharge(docSnap.data().serviceCharge);
-        setTotalPrice(docSnap.data().totalPrice);
-        docSnap.data().order.map((i) => {
-          getOrders += `Product Name:${i.name} Color:${i.color} Size: ${
-            i.size
-          } Quantity Ordered:${i.quantity} Price:${i.price} Total Price:${
-            i.price * i.quantity
-          } Link:${i.link} \n \n`;
-        });
-      } catch (error) {
-        console.log(error.message);
-      }
-      setOrders(getOrders);
-    };
-    getProdDetails(order_id);
-  }, [order_id]);
+  }, [router]);
 
   const config = {
     reference: new Date().getTime().toString(),
@@ -364,9 +362,7 @@ function Checkout() {
                 />
               </div>
               <div className="flex flex-col input-group gap-y-4">
-                <label
-                  className="text-[0.92rem] font-medium opacity-80"
-                >
+                <label className="text-[0.92rem] font-medium opacity-80">
                   Shipping Method *
                 </label>
                 <select

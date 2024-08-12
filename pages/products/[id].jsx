@@ -40,21 +40,23 @@ function Product({ product }) {
 
   const addToBag = () => {
     const prodDetails = {
-      _id: product._id+""+color.color+""+size.size,
+      _id: product._id + "" + color.color + "" + size.size,
       name: product.name,
       new: product.new,
-      color: color, 
+      color: color,
       size: size,
       discountedPrice: product.discountedPrice,
       originalPrice: product.originalPrice,
       productImage: product.productImage,
       productLink: product.productLink,
-    }
-    const prod = products.find(({_id}) => _id == product._id+""+color.color+""+size.size)
-    if(prod) {
+    };
+    const prod = products.find(
+      ({ _id }) => _id == product._id + "" + color.color + "" + size.size
+    );
+    if (prod) {
       toast.error("Product with the same specifications already exists in bag");
     } else {
-      dispatch(add({ ...prodDetails, quantity: 1,}));
+      dispatch(add({ ...prodDetails, quantity: 1 }));
       toast.success("Product has been added to Bag");
     }
     setAdding(true);
@@ -70,56 +72,64 @@ function Product({ product }) {
           <div className="overflow-scroll lg:pt-[60px] flex items-center flex-row lg:flex-col w-full lg:w-full h-full">
             <div className="flex lg:flex-col">
               <div className="lg:w-[25vw] w-[50vw] min-h-[200px] lg:mb-12 mr-[3vw] lg:mr-0 lg:min-h-[350px] relative">
-                <Image
-                  fill
-                  src={product?.productImage}
-                  alt="Image"
-                  className="object-contain object-center"
-                />
-              </div>
-              {product?.productImage2 && (
-                <div className="lg:w-[25vw] w-[50vw] min-h-[200px] lg:mb-12  mr-[3vw] lg:mr-0 lg:min-h-[350px] relative">
+                {product?.productImage && (
                   <Image
                     fill
-                    src={product?.productImage2}
+                    src={product?.productImage}
                     alt="Image"
                     className="object-contain object-center"
                   />
+                )}
+              </div>
+              {product?.productImage2 && (
+                <div className="lg:w-[25vw] w-[50vw] min-h-[200px] lg:mb-12  mr-[3vw] lg:mr-0 lg:min-h-[350px] relative">
+                  {product?.productImage2 && (
+                    <Image
+                      fill
+                      src={product?.productImage2}
+                      alt="Image"
+                      className="object-contain object-center"
+                    />
+                  )}
                 </div>
               )}
               {product?.colors !== null &&
                 product?.colors.map(
-                  (i) =>
+                  (i, index) =>
                     i.image !== null && (
                       <div
-                        key={i._id}
+                        key={index}
                         id={i.color}
                         className="lg:w-[25vw] w-[50vw] min-h-[200px] bg-white lg:mb-12  mr-[3vw] lg:mr-0 lg:min-h-[350px] relative"
                       >
-                        <Image
-                          fill
-                          src={i.image}
-                          alt="Image"
-                          className="object-contain object-center"
-                        />
+                        {i.image && (
+                          <Image
+                            fill
+                            src={i.image}
+                            alt="Image"
+                            className="object-contain object-center"
+                          />
+                        )}
                       </div>
                     )
                 )}
               {product?.sizes !== null &&
                 product?.sizes.map(
-                  (i) =>
+                  (i, index) =>
                     i.image !== null && (
                       <div
-                        key={i._id}
+                        key={index}
                         id={i.size}
                         className="lg:w-[25vw] w-[50vw] min-h-[200px] bg-white lg:mb-12  mr-[3vw] lg:mr-0 lg:min-h-[350px] relative"
                       >
-                        <Image
-                          fill
-                          src={i.image}
-                          alt="Image"
-                          className="object-contain object-center"
-                        />
+                        {i.image && (
+                          <Image
+                            fill
+                            src={i.image}
+                            alt="Image"
+                            className="object-contain object-center"
+                          />
+                        )}
                       </div>
                     )
                 )}
@@ -169,9 +179,9 @@ function Product({ product }) {
             </div>
             <div className="grid grid-cols-2">
               {product?.colors !== null &&
-                product?.colors.map((i) => (
+                product?.colors.map((i, index) => (
                   <button
-                    key={i._id}
+                    key={index}
                     onClick={() => {
                       setColor({ color: i.color, image: i.image });
                       handleClickScroll(i.color);
@@ -210,9 +220,9 @@ function Product({ product }) {
             </div>
             <div className="grid grid-cols-2">
               {product?.sizes !== null &&
-                product?.sizes.map((i) => (
+                product?.sizes.map((i, index) => (
                   <button
-                    key={i._id}
+                    key={index}
                     onClick={() => {
                       setSize({ size: i.size, image: i.image });
                       handleClickScroll(i.size);

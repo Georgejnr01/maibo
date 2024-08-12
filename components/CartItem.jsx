@@ -21,10 +21,10 @@ function CartItem({ product }) {
             {product?.name}
           </h4>
           <div className="lg:mt-2 lg:flex items-center">
-            { product?.color.color !== "" && product?.color.image !== "" &&
+            {product?.color.color !== "" && product?.color.image !== "" && (
               <div className="flex items-center mr-[20px]">
                 <div className="font-bold mr-[5px]">Color:</div>
-                {product?.color.image !== "" && (
+                {product?.color.image && product?.color.image !== "" && (
                   <div className="w-[15px] h-[15px] relative bg-gray mr-[5px]">
                     <Image src={product?.color.image} fill alt="colorImg" />
                   </div>
@@ -33,18 +33,18 @@ function CartItem({ product }) {
                   <div>{product?.color.color}</div>
                 )}
               </div>
-            }
-            {product?.size.image !== "" && product?.size.size !== "" &&
+            )}
+            {product?.size.image !== "" && product?.size.size !== "" && (
               <div className=" mt-[5px] lg:mt-0 flex items-center">
-              <div className="font-bold mr-[5px]">Size:</div>
-              {product?.size.image !== null && (
-                <div className="w-[15px] h-[15px] relative bg-gray mr-[5px]">
-                  <Image src={product?.size.image} fill alt="sizeImg" />
-                </div>
-              )}
-              {product?.size.size !== null && <div>{product?.size.size}</div>}
-            </div>
-            }
+                <div className="font-bold mr-[5px]">Size:</div>
+                {product?.size.image && product?.size.image !== "" && (
+                  <div className="w-[15px] h-[15px] relative bg-gray mr-[5px]">
+                    <Image src={product?.size.image} fill alt="sizeImg" />
+                  </div>
+                )}
+                {<div>{product?.size.size}</div>}
+              </div>
+            )}
           </div>
           <p className="mt-1 lg:mt-2 text-xs md:text-sm">
             {product?.discountedPrice !== product?.originalPrice &&
@@ -85,12 +85,14 @@ function CartItem({ product }) {
         </button>
       </span>
       <span className="relative block h-[146px] md:h-[156px] w-32 md:w-[132px]">
-        <Image
-          src={product?.productImage}
-          alt="item"
-          fill
-          className="object-cover object-center"
-        />
+        {product?.productImage && (
+          <Image
+            src={product?.productImage}
+            alt="item"
+            fill
+            className="object-cover object-center"
+          />
+        )}
       </span>
     </div>
   );

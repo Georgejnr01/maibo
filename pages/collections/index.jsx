@@ -13,13 +13,15 @@ function Index({ categories }) {
           className="product overflow-hidden relative flex items-center justify-center w-full h-[150px] lg:h-[200px]"
         >
           <div className="absolute top-0 w-full h-full bg-black/40 -z-20"></div>
-          <Image
-            src={cat.image}
-            alt="image"
-            width="300"
-            height="150"
-            className="absolute object-cover -z-50"
-          />
+          {cat.image && (
+            <Image
+              src={cat.image}
+              alt="image"
+              width="300"
+              height="150"
+              className="absolute object-cover -z-50"
+            />
+          )}
 
           <div className="z-10 text-center text-white">{cat.name}</div>
         </Link>

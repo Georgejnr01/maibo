@@ -68,26 +68,27 @@ export default function Home({ categories }) {
         </div>
       </div>
       <div className="mb-[12px] lg:mb-16">
-        <span className="block text-center mx-auto">
-        </span>
+        <span className="block text-center mx-auto"></span>
       </div>
       <div className="relative w-full min-h-[30vh] px-5 group md:px-16">
         <div className="">In Stock</div>
         <div className="gridImages w-full h-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 mt-4">
           {categories.slice(0, 4).map((cat) => (
             <Link
-              href={ cat.name && `/collections/${cat.name?.replace(/ /g, "_")}`}
+              href={cat.name && `/collections/${cat.name?.replace(/ /g, "_")}`}
               key={cat._id}
               className="product overflow-hidden relative flex items-center justify-center w-full h-[150px] lg:h-[200px]"
             >
               <div className="bg-black/60 w-full h-full absolute top-0 -z-20"></div>
-              <Image
-                src={cat.image}
-                alt="image"
-                width="300"
-                height="150"
-                className="object-cover absolute -z-50"
-              />
+              {cat.image && (
+                <Image
+                  src={cat.image}
+                  alt="image"
+                  width="300"
+                  height="150"
+                  className="object-cover absolute -z-50"
+                />
+              )}
 
               <div className="text-center text-white z-10">{cat.name}</div>
             </Link>
