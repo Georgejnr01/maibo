@@ -79,11 +79,7 @@ function Footer() {
             {[
               {
                 icon: <AiOutlineWhatsApp className="w-5 h-5 text-black" />,
-                link: "https://wa.me/2349042850276",
-              },
-              {
-                icon: <AiFillInstagram className="w-5 h-5 text-black" />,
-                link: "https://www.instagram.com/maibostore?igsh=MXhuaW56OHFoMTNxYQ==",
+                link: "https://wa.me/447366184756",
               },
             ].map((d) => (
               <Link href={d.link} key={d.link} className="">
