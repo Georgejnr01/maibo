@@ -39,6 +39,7 @@ export default function Home({ categories }) {
   return (
     <div>
       <Analytics />
+      <Script src="https://embed.tawk.to/673f767a2480f5b4f5a2185a/1id7udkdt" />
       <div className="relative h-56 md:h-[35rem] w-full mb-12">
         <Image
           fill
