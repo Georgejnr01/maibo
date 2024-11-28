@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import Card from "../components/Card";
 import { sanityClient } from "../sanity";
+import Script from "next/script";
 
 export default function Home({ categories }) {
   const [activeCat, setActiveCat] = useState(categories[0].name);
