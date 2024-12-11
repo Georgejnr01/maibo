@@ -292,7 +292,7 @@ function Cart({ opened, handle }) {
       dispatch(addTotalPrice(price));
       let service = 0;
       products.forEach((item) => {
-        service += 80 * item.quantity;
+        service += 200 * item.quantity;
       });
       setServiceCharge(service);
       dispatch(addServiceCharge(service));
