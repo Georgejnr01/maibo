@@ -28,7 +28,7 @@ function Contact() {
         <h1 className="text-4xl md:text-5xl opacity-95">Contact Us</h1>
         <div className="flex flex-col gap-y-4 md:gap-y-6 my-10 md:my-14 opacity-80 font-medium">
           <span>
-            Call: <Link href={"tel:+447830732460"}>+447366184756</Link>
+            Call: <Link href={"tel:+447830732460"}>+447830732460</Link>
           </span>
           <span>
             Email:{" "}
