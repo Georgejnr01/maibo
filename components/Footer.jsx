@@ -79,7 +79,7 @@ function Footer() {
             {[
               {
                 icon: <AiOutlineWhatsApp className="w-5 h-5 text-black" />,
-                link: "https://wa.me/447366184756",
+                link: "https://wa.me/447830732460",
               },
             ].map((d) => (
               <Link href={d.link} key={d.link} className="">
